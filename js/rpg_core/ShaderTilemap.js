@@ -13,11 +13,10 @@ function ShaderTilemap() {
 ShaderTilemap.prototype = Object.create(Tilemap.prototype);
 ShaderTilemap.prototype.constructor = ShaderTilemap;
 
-// we need this constant for some platforms (Samsung S4, S5, Tab4, HTC One H8)
-PIXI.glCore.VertexArrayObject.FORCE_NATIVE = true;
-PIXI.settings.GC_MODE = PIXI.GC_MODES.AUTO;
-PIXI.tilemap.TileRenderer.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-PIXI.tilemap.TileRenderer.DO_CLEAR = true;
+// This is old RpgMakerMV-compatible setting
+// https://github.com/pixijs/pixi-tilemap/blob/c55b2b30e75dbe7e3f9709b0ca7f0654f6ca8d30/README.md#multi-texture-configuration-important-page_facing_up
+PIXI.tilemap.Constant.boundCountPerBuffer = 4;
+PIXI.tilemap.Constant.maxTextures = 4;
 
 /**
  * Uploads animation state in renderer
@@ -36,24 +35,12 @@ ShaderTilemap.prototype._hackRenderer = function(renderer) {
 /**
  * PIXI render method
  *
- * @method renderCanvas
+ * @method render
  * @param {Object} pixi renderer
  */
-ShaderTilemap.prototype.renderCanvas = function(renderer) {
+ShaderTilemap.prototype.render = function(renderer) {
     this._hackRenderer(renderer);
-    PIXI.Container.prototype.renderCanvas.call(this, renderer);
-};
-
-
-/**
- * PIXI render method
- *
- * @method renderWebGL
- * @param {Object} pixi renderer
- */
-ShaderTilemap.prototype.renderWebGL = function(renderer) {
-    this._hackRenderer(renderer);
-    PIXI.Container.prototype.renderWebGL.call(this, renderer);
+    PIXI.Container.prototype.render.call(this, renderer);
 };
 
 /**
@@ -65,7 +52,7 @@ ShaderTilemap.prototype.refresh = function() {
     if (this._lastBitmapLength !== this.bitmaps.length) {
         this._lastBitmapLength = this.bitmaps.length;
         this.refreshTileset();
-    };
+    }
     this._needsRepaint = true;
 };
 

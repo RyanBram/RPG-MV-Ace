@@ -12,6 +12,7 @@ Spriteset_Base.prototype.constructor = Spriteset_Base;
 
 Spriteset_Base.prototype.initialize = function() {
     Sprite.prototype.initialize.call(this);
+    this.filters = [new PIXI.filters.AlphaFilter()]; // for picture
     this.setFrame(0, 0, Graphics.width, Graphics.height);
     this._tone = [0, 0, 0, 0];
     this.opaque = true;

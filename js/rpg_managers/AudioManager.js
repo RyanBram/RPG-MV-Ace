@@ -392,8 +392,10 @@ AudioManager.updateBufferParameters = function(buffer, configVolume, audio) {
 AudioManager.audioFileExt = function() {
     if (WebAudio.canPlayOgg() && !Utils.isMobileDevice()) {
         return '.ogg';
-    } else {
+    } else if (WebAudio.canPlayM4a()) {
         return '.m4a';
+    } else {
+        return 'ogg';
     }
 };
 

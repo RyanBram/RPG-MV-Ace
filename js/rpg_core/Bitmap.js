@@ -690,7 +690,8 @@ Bitmap.prototype.drawSmallText = function(text, x, y, maxWidth, lineHeight, alig
     while (scaledHeightWithOutline > bitmapHeight) bitmapHeight *= 2;
     if (bitmap.width !== bitmapWidth || bitmap.height !== bitmapHeight) bitmap.resize(bitmapWidth, bitmapHeight);
 
-    bitmap.drawText(text, bitmap.outlineWidth, bitmap.outlineWidth, scaledMaxWidth, minFontSize, align);
+    var roundedOutlineWidth = Math.round(bitmap.outlineWidth); // for Safari
+    bitmap.drawText(text, roundedOutlineWidth, roundedOutlineWidth, scaledMaxWidth, minFontSize, align);
     this.blt(bitmap, 0, 0, scaledMaxWidthWithOutline, scaledHeightWithOutline,
         x - this.outlineWidth, y - this.outlineWidth + (lineHeight - this.fontSize) / 2, maxWidth + this.outlineWidth * 2, height + this.outlineWidth * 2);
     bitmap.clear();

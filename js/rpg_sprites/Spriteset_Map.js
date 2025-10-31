@@ -70,13 +70,25 @@ Spriteset_Map.prototype.loadTileset = function() {
         for (var i = 0; i < tilesetNames.length; i++) {
             this._tilemap.bitmaps[i] = ImageManager.loadTileset(tilesetNames[i]);
         }
-        var newTilesetFlags = $gameMap.tilesetFlags();
         this._tilemap.refreshTileset();
+        const loadPromises = this._tilemap.bitmaps.map(function (bitmap) {
+            return new Promise(function (resolve) {
+                if (bitmap.isReady()) return resolve();
+                bitmap.addLoadListener(resolve);
+            });
+        })
+        Promise.all(loadPromises).then(this.onLoadTilesetBitmaps.bind(this));
+
+        var newTilesetFlags = $gameMap.tilesetFlags();
         if (!this._tilemap.flags.equals(newTilesetFlags)) {
             this._tilemap.refresh();
         }
         this._tilemap.flags = newTilesetFlags;
     }
+};
+
+Spriteset_Map.prototype.onLoadTilesetBitmaps = function () {
+    this._tilemap.refreshTileset();
 };
 
 Spriteset_Map.prototype.createCharacters = function() {

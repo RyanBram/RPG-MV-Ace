@@ -269,7 +269,6 @@ Graphics.startLoading = function() {
 Graphics._setupProgress = function(){
     this._progressElement = document.createElement('div');
     this._progressElement.id = 'loading-progress';
-    this._progressElement.width = 600;
     this._progressElement.height = 300;
     this._progressElement.style.visibility = 'hidden';
 
@@ -281,6 +280,7 @@ Graphics._setupProgress = function(){
     this._barElement.style.border = '5px solid white';
     this._barElement.style.borderRadius = '15px';
     this._barElement.style.marginTop = '40%';
+    this._barElement.style.boxSizing = 'border-box';
 
     this._filledBarElement = document.createElement('div');
     this._filledBarElement.id = 'loading-filled-bar';
@@ -321,6 +321,7 @@ Graphics._updateProgressCount = function(countLoaded, countLoading){
 };
 
 Graphics._updateProgress = function(){
+    this._progressElement.width = Math.min(this._width * 0.9, 600);
     this._centerElement(this._progressElement);
 };
 
@@ -395,7 +396,7 @@ Graphics.eraseLoadingError = function() {
         this._errorPrinter.style.msUserSelect     = 'none';
         this._errorPrinter.style.mozUserSelect    = 'none';
         this._errorPrinter.oncontextmenu = function() { return false; };
-        this.startLoading();
+        this._loadingCount = 0;
     }
 };
 
@@ -1103,25 +1104,16 @@ Graphics._paintUpperCanvas = function() {
  */
 Graphics._createRenderer = function() {
     PIXI.dontSayHello = true;
-    var width = this._width;
-    var height = this._height;
-    var options = { view: this._canvas };
     try {
-        switch (this._rendererType) {
-        case 'canvas':
-            this._renderer = new PIXI.CanvasRenderer(width, height, options);
-            break;
-        case 'webgl':
-            this._renderer = new PIXI.WebGLRenderer(width, height, options);
-            break;
-        default:
-            this._renderer = PIXI.autoDetectRenderer(width, height, options);
-            break;
-        }
+        this._renderer = new PIXI.Renderer({
+            width: this._width,
+            height: this._height,
+            view: this._canvas
+        });
 
-        if(this._renderer && this._renderer.textureGC)
+        if (this._renderer && this._renderer.textureGC) {
             this._renderer.textureGC.maxIdle = 1;
-
+        }
     } catch (e) {
         this._renderer = null;
     }
@@ -1438,7 +1430,7 @@ Graphics._switchFullScreen = function() {
  */
 Graphics._isFullScreen = function() {
     return document.fullscreenElement ||
-           document.mozFullScreen || 
+           document.mozFullScreen ||
            document.webkitFullscreenElement ||
            document.msFullscreenElement;
 };
@@ -1467,7 +1459,7 @@ Graphics._requestFullScreen = function() {
  * @private
  */
 Graphics._cancelFullScreen = function() {
-    if (document.exitFullscreen) { 
+    if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {
         document.mozCancelFullScreen();

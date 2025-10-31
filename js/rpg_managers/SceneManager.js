@@ -15,6 +15,8 @@ SceneManager._getTimeInMsWithoutMobileSafari = function() {
     return performance.now();
 };
 
+SceneManager._isUsableTimeInMs = !!window.performance && !!window.performance.now;
+
 SceneManager._scene             = null;
 SceneManager._nextScene         = null;
 SceneManager._stack             = [];
@@ -28,7 +30,7 @@ SceneManager._screenHeight      = 624;
 SceneManager._boxWidth          = 816;
 SceneManager._boxHeight         = 624;
 SceneManager._deltaTime = 1.0 / 60.0;
-if (!Utils.isMobileSafari()) SceneManager._currentTime = SceneManager._getTimeInMsWithoutMobileSafari();
+if (SceneManager._isUsableTimeInMs) SceneManager._currentTime = SceneManager._getTimeInMsWithoutMobileSafari();
 SceneManager._accumulator = 0.0;
 SceneManager._frameCount = 0;
 
@@ -152,7 +154,7 @@ SceneManager.requestUpdate = function() {
 SceneManager.update = function() {
     try {
         this.tickStart();
-        if (Utils.isMobileSafari()) {
+        if (!this._isUsableTimeInMs) {
             this.updateInputData();
         }
         this.updateManagers();
@@ -223,7 +225,7 @@ SceneManager.updateInputData = function() {
 };
 
 SceneManager.updateMain = function() {
-    if (Utils.isMobileSafari()) {
+    if (!this._isUsableTimeInMs) {
         this.changeScene();
         this.updateScene();
     } else {
@@ -382,7 +384,7 @@ SceneManager.backgroundBitmap = function() {
 SceneManager.resume = function() {
     this._stopped = false;
     this.requestUpdate();
-    if (!Utils.isMobileSafari()) {
+    if (this._isUsableTimeInMs) {
         this._currentTime = this._getTimeInMsWithoutMobileSafari();
         this._accumulator = 0;
     }

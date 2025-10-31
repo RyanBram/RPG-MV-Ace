@@ -10,13 +10,13 @@ function TilingSprite() {
     this.initialize.apply(this, arguments);
 }
 
-TilingSprite.prototype = Object.create(PIXI.extras.PictureTilingSprite.prototype);
+TilingSprite.prototype = Object.create(PIXI.TilingSprite.prototype);
 TilingSprite.prototype.constructor = TilingSprite;
 
 TilingSprite.prototype.initialize = function(bitmap) {
     var texture = new PIXI.Texture(new PIXI.BaseTexture());
 
-    PIXI.extras.PictureTilingSprite.call(this, texture);
+    PIXI.TilingSprite.call(this, texture);
 
     this._bitmap = null;
     this._width = 0;
@@ -32,23 +32,6 @@ TilingSprite.prototype.initialize = function(bitmap) {
     this.origin = new Point();
 
     this.bitmap = bitmap;
-};
-
-TilingSprite.prototype._renderCanvas_PIXI = PIXI.extras.PictureTilingSprite.prototype._renderCanvas;
-TilingSprite.prototype._renderWebGL_PIXI = PIXI.extras.PictureTilingSprite.prototype._renderWebGL;
-
-/**
- * @method _renderCanvas
- * @param {Object} renderer
- * @private
- */
-TilingSprite.prototype._renderCanvas = function(renderer) {
-    if (this._bitmap) {
-        this._bitmap.touch();
-    }
-    if (this.texture.frame.width > 0 && this.texture.frame.height > 0) {
-        this._renderCanvas_PIXI(renderer);
-    }
 };
 
 /**
@@ -146,7 +129,7 @@ TilingSprite.prototype.updateTransform = function() {
     this.updateTransformTS();
 };
 
-TilingSprite.prototype.updateTransformTS = PIXI.extras.TilingSprite.prototype.updateTransform;
+TilingSprite.prototype.updateTransformTS = PIXI.TilingSprite.prototype.updateTransform;
 
 /**
  * @method _onBitmapLoad
@@ -170,25 +153,6 @@ TilingSprite.prototype._refresh = function() {
     this.texture.frame = frame;
     this.texture._updateID++;
     this.tilingTexture = null;
-};
-
-
-TilingSprite.prototype._speedUpCustomBlendModes = Sprite.prototype._speedUpCustomBlendModes;
-
-/**
- * @method _renderWebGL
- * @param {Object} renderer
- * @private
- */
-TilingSprite.prototype._renderWebGL = function(renderer) {
-    if (this._bitmap) {
-        this._bitmap.touch();
-        this._bitmap.checkDirty();
-    }
-
-    this._speedUpCustomBlendModes(renderer);
-
-    this._renderWebGL_PIXI(renderer);
 };
 
 // The important members from Pixi.js

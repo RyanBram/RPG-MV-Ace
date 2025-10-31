@@ -16,16 +16,14 @@ WindowLayer.prototype.initialize = function() {
     PIXI.Container.call(this);
     this._width = 0;
     this._height = 0;
-    this._tempCanvas = null;
-    this._translationMatrix = [1, 0, 0, 0, 1, 0, 0, 0, 1];
 
     this._windowMask = new PIXI.Graphics();
     this._windowMask.beginFill(0xffffff, 1);
     this._windowMask.drawRect(0, 0, 0, 0);
     this._windowMask.endFill();
-    this._windowRect = this._windowMask.graphicsData[0].shape;
+    this._windowRect = this._windowMask.geometry.graphicsData[0].shape;
+    this._windowMaskShift = new PIXI.Point();
 
-    this._renderSprite = null;
     this.filterArea = new PIXI.Rectangle();
     this.filters = [WindowLayer.voidFilter];
 
@@ -37,7 +35,7 @@ WindowLayer.prototype.onRemoveAsAChild = function() {
     this.removeChildren();
 }
 
-WindowLayer.voidFilter = new PIXI.filters.VoidFilter();
+WindowLayer.voidFilter = new PIXI.filters.AlphaFilter();
 
 /**
  * The width of the window layer in pixels.
@@ -101,120 +99,57 @@ WindowLayer.prototype.update = function() {
 };
 
 /**
- * @method _renderCanvas
+ * @method render
  * @param {Object} renderSession
  * @private
  */
-WindowLayer.prototype.renderCanvas = function(renderer) {
-    if (!this.visible || !this.renderable) {
-        return;
-    }
+WindowLayer.prototype.render = function(renderer) {
+    if (!this.visible || !this.renderable) return;
+    if (this.children.length === 0) return;
 
-    if (!this._tempCanvas) {
-        this._tempCanvas = document.createElement('canvas');
-    }
+    // var sourceFrame = renderer.renderTexture.sourceFrame;
+    // var projectionMatrix = renderer.projection.projectionMatrix;
+    // this._windowMaskShift.x = Math.round((projectionMatrix.tx + 1) / 2 * sourceFrame.width);
+    // this._windowMaskShift.y = Math.round((projectionMatrix.ty - 1) / 2 * sourceFrame.height);
+    renderer.batch.flush();
 
-    this._tempCanvas.width = Graphics.width;
-    this._tempCanvas.height = Graphics.height;
+    const gl = renderer.gl;
+    gl.enable(gl.STENCIL_TEST);
 
-    var realCanvasContext = renderer.context;
-    var context = this._tempCanvas.getContext('2d');
-
-    context.save();
-    context.clearRect(0, 0, Graphics.width, Graphics.height);
-    context.beginPath();
-    context.rect(this.x, this.y, this.width, this.height);
-    context.closePath();
-    context.clip();
-
-    renderer.context = context;
-
-    for (var i = 0; i < this.children.length; i++) {
+    for (var i = this.children.length - 1; i >= 0; --i) {
         var child = this.children[i];
         if (child._isWindow && child.visible && child.openness > 0) {
-            this._canvasClearWindowRect(renderer, child);
-            context.save();
-            child.renderCanvas(renderer);
-            context.restore();
+            gl.stencilFunc(gl.EQUAL, 0, 0xff);
+            gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
+            child.render(renderer);
+            renderer.batch.flush();
+
+            this._maskWindow(child, this._windowMaskShift);
+
+            gl.stencilFunc(gl.ALWAYS, 1, 0xff);
+            gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
+            gl.colorMask(false, false, false, false);
+            gl.depthMask(false);
+            this._windowMask.render(renderer);
+            renderer.batch.flush();
+            gl.colorMask(true, true, true, true);
+            gl.depthMask(true);
         }
     }
 
-    context.restore();
+    gl.clearStencil(0);
+    gl.clear(gl.STENCIL_BUFFER_BIT);
+    gl.disable(gl.STENCIL_TEST);
 
-    renderer.context = realCanvasContext;
-    renderer.context.setTransform(1, 0, 0, 1, 0, 0);
-    renderer.context.globalCompositeOperation = 'source-over';
-    renderer.context.globalAlpha = 1;
-    renderer.context.drawImage(this._tempCanvas, 0, 0);
+    renderer.batch.flush();
 
     for (var j = 0; j < this.children.length; j++) {
         if (!this.children[j]._isWindow) {
-            this.children[j].renderCanvas(renderer);
-        }
-    }
-};
-
-/**
- * @method _canvasClearWindowRect
- * @param {Object} renderSession
- * @param {Window} window
- * @private
- */
-WindowLayer.prototype._canvasClearWindowRect = function(renderSession, window) {
-    var rx = this.x + window.x;
-    var ry = this.y + window.y + window.height / 2 * (1 - window._openness / 255);
-    var rw = window.width;
-    var rh = window.height * window._openness / 255;
-    renderSession.context.clearRect(rx, ry, rw, rh);
-};
-
-/**
- * @method _renderWebGL
- * @param {Object} renderSession
- * @private
- */
-WindowLayer.prototype.renderWebGL = function(renderer) {
-    if (!this.visible || !this.renderable) {
-        return;
-    }
-
-    if (this.children.length==0) {
-        return;
-    }
-
-    renderer.flush();
-    this.filterArea.copy(this);
-    renderer.filterManager.pushFilter(this, this.filters);
-    renderer.currentRenderer.start();
-
-    var shift = new PIXI.Point();
-    var rt = renderer._activeRenderTarget;
-    var projectionMatrix = rt.projectionMatrix;
-    shift.x = Math.round((projectionMatrix.tx + 1) / 2 * rt.sourceFrame.width);
-    shift.y = Math.round((projectionMatrix.ty + 1) / 2 * rt.sourceFrame.height);
-
-    for (var i = 0; i < this.children.length; i++) {
-        var child = this.children[i];
-        if (child._isWindow && child.visible && child.openness > 0) {
-            this._maskWindow(child, shift);
-            renderer.maskManager.pushScissorMask(this, this._windowMask);
-            renderer.clear();
-            renderer.maskManager.popScissorMask();
-            renderer.currentRenderer.start();
-            child.renderWebGL(renderer);
-            renderer.currentRenderer.flush();
+            this.children[j].render(renderer);
         }
     }
 
-    renderer.flush();
-    renderer.filterManager.popFilter();
-    renderer.maskManager.popScissorMask();
-
-    for (var j = 0; j < this.children.length; j++) {
-        if (!this.children[j]._isWindow) {
-            this.children[j].renderWebGL(renderer);
-        }
-    }
+    renderer.batch.flush();
 };
 
 /**
@@ -223,13 +158,15 @@ WindowLayer.prototype.renderWebGL = function(renderer) {
  * @private
  */
 WindowLayer.prototype._maskWindow = function(window, shift) {
-    this._windowMask._currentBounds = null;
-    this._windowMask.boundsDirty = true;
-    var rect = this._windowRect;
-    rect.x = this.x + shift.x + window.x;
-    rect.y = this.y + shift.y + window.y + window.height / 2 * (1 - window._openness / 255);
-    rect.width = window.width;
-    rect.height = window.height * window._openness / 255;
+    this._windowMask.clear();
+    this._windowMask.beginFill(0xffffff);
+    this._windowMask.drawRect(
+        this.x + shift.x + window.x,
+        this.y + shift.y + window.y + window.height / 2 * (1 - window._openness / 255),
+        window.width,
+        window.height * window._openness / 255
+    );
+    this._windowMask.endFill();
 };
 
 // The important members from Pixi.js

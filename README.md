@@ -1,199 +1,198 @@
+# **RPG Maker MV Ace: The Community CoreScript**
 
-# RPG Maker MV CoreScript
+![Banner](https://raw.githubusercontent.com/RyanBram/RPG-Maker-MV-Ace/refs/heads/master/docs/RPGMVAce.png)
 
-## Introduction
+## **🚀 Introduction**
 
-"RPG Maker MV CoreScript" is a game engine for 2D games that runs on the browser. "RPG Maker MV CoreScript" is designed as a game engine dedicated to "RPG Maker MV", the latest work of "RPG Maker" series of 2DRPG world number one software with more than 20 years history, and more than 1000 games are running. (February 2017)
+**RPG Maker MV Ace** is a community-driven continuation and enhancement of the original **RPG Maker MV** core engine. It functions as a powerful HTML5 game engine specifically designed for 2D games, ensuring seamless deployment across **desktop, mobile, and browser** platforms.
 
-## What is this project?
+RPG Maker is a legendary series with over 20 years of history, powering thousands of games. Ace is committed to improving the foundation of the modern, HTML5-based MV version.
 
-This project is a project aimed at improving "RPG Maker MV CoreScript" better by the community and supporting many game creators.
+## **💡 Project Mission**
 
-The core script developed by this project is widely distributed to RPG Maker users through KADOKAWA.
-The RPGMaker MV community is centered around plugins. Therefore, Ver1 series is developed while minimizing destructive change.
+This project is dedicated to collaboratively improving the **RPG Maker MV CoreScript** with the goal of providing a more robust, efficient, and well-maintained foundation for all game creators.
 
-## How to use
+Recognizing that the RPG Maker MV ecosystem is heavily reliant on **community plugins**, the development of the Ace version prioritizes **minimizing breaking changes** to ensure backward compatibility and a smooth transition for existing projects.
 
-There are three releases
+## **💾 Releases & Usage**
 
-- Develop --- Development version. You can download it with GitHub.
-- RC --- Release candidate version. It is for game developers to do the test. It will be distributed from game posting site "RPG Atsumaru".
-- Stable --- Stable version. KADOKAWA is widely distributed to general users through Steam and official website.
+We maintain three primary release branches for different user needs:
 
-## How to build
+-   **Stable:** The official, well-tested version recommended for production use.
+-   **RC (Release Candidate):** A version nearing stability, available for final testing before merging into Stable.
+-   **Develop:** The latest, most active development version, suitable for testing new features and contributions.
 
-To build Corescripts, install Node.js, change working directory, and just type in console:
+## **⚙️ Building the CoreScripts**
 
-```
-npm install
+To compile the CoreScripts, you will need **Node.js** installed.
+
+### **Build All Corescripts**
+
+Change to the project's working directory and run the following commands:
+
+npm install  
 npm run build
-```
 
-Then you can find Corescripts in folder “dist”
+The compiled CoreScripts will be available in the **dist** folder.
 
-If you want to build indivisually, Here’s some command,
-```
-npm run build:core
-npm run build:managers
-npm run build:objects
-npm run build:scenes
-npm run build:sprites
+### **Individual Builds**
+
+You can also build specific parts of the CoreScript individually:
+
+npm run build:core  
+npm run build:managers  
+npm run build:objects  
+npm run build:scenes  
+npm run build:sprites  
 npm run build:windows
-```
 
-To test, place MV’s project in game/ and type
+### **Development Tasks**
 
-```
+We provide useful tasks for active development:
+
+-   **npm run watch**: Watches for changes in js/rpg\_\*\*\* files, concatenates them, and copies the output to the ./game/js/ directory for immediate testing.
+-   **npm start**: Starts a local development server, allowing you to test the CoreScripts in your browser at http://localhost:8080/.
+
+### **Testing**
+
+To run tests, place an RPG Maker MV project inside the **game/** folder, then execute:
+
 npm test
-```
 
-There are helpful tasks, watch and start.
+## **🤝 How to Contribute**
 
-Watch task is watching js/rpg_*** changes, concat them, and copy that to ./game/js/ .
+We welcome contributors\! If you'd like to join the effort, please keep these guidelines in mind:
 
-```
-npm run watch
-```
+-   **Language:** All discussions, documentation, and code comments use **English** as the primary language.
+-   **Code Standard:** To maintain maximum **plugin compatibility**, all CoreScript development is done using **ECMAScript 5 (ES5)**.
+-   **Governance:** This is a newly forming project. Development standards and major decisions are determined collaboratively through community discussion.
 
-Start task starts local server. You can test Corescripts in your browser.
+## **🗺️ Roadmap**
 
-http://localhost:8080/
+Development progresses according to the following plan. We are currently focusing on **Version 1.5**.
 
-```
-npm start
-```
+### **Version 1.0 (Completed)**
 
+**Goal:** Establish the community development baseline.
 
-## How to join
+-   Split the monolithic core script file.
+-   Initial GitHub repository setup.
+-   Publication of this roadmap.
 
-- This project uses English as the main language.
-- The workflow is Github Flow. When sending PR, prepare a new feature branch and send it to the master branch of this repository.http://scottchacon.com/2011/08/31/github-flow.html
-- This project uses ES5. It is for compatibility with plugins.
-- Please apply for development slack from this form. It will usually be invited within 48 hours.https://docs.google.com/forms/d/1T5wrKeOAfFBNytHrby4HMDzShtOMl2s7ayvjGwBrbNY/edit
-- This project is just started. The rules of development are decided through discussion.
+### **Version 1.1 (Completed)**
 
-## Roadmap
+**Goal:** Address Critical Engine and Compatibility Bugs.
 
-Development will be done according to the roadmap. Currently we are developing ver 1.2
+-   Resolve persistent memory-related problems.
+-   Implement pre-emptive reading/loading of image assets.
+-   Resolve known sound issues specific to Google Chrome.
+-   Fix previously identified bugs.
 
-### ver 1.0
+### **Version 1.2 (Completed)**
 
-Goal: Publish community development version
-- Split core script file
-- Put on github
-- Publish roadmap
+**Goal:** Improve Stability and Continuity.
 
-### ver 1.1
+-   Implement load error retry mechanisms to prevent soft-locks.
+-   Develop a standard options plugin.
+-   Introduce a robust Volume Change API.
 
-Goal: Fix a fatal bug
-- Fix memory related problems
-- Preceding reading of image material
-- Responding to sound problems of google Chrome
-- Fixed bugs already known
+### **Version 1.3 (Completed)**
 
+**Goal:** Enhance Game Development Workflow.
 
-### ver 1.2
+-   Implement an Auto-Save feature.
+-   Develop a simple plugin conflict detection system.
+-   Create plugin development guidelines and sample code.
+-   Refine the bug reporting process.
 
-Goal: Responding to problems where games can not continue
-- Retry at load error
-- Development of a standard plugin for options
-- Volume Change API
+### **Version 1.4 (Completed)**
 
-### ver 1.3
+**Goal:** Optimize Performance and Loading Speed.
 
-Goal: Assist in game development
-- AutoSave
-- Simple conflict check for plugins
-- Guidelines and sample writing for plugins
-- Refined bug report
+-   Introduce high-speed loading for audio sources.
+-   Add a progress bar to the load screen.
+-   Implement a lightweight save file format.
 
-### ver 1.4
+### **Version 1.5 (Current Focus)**
 
-Goal: Accelerate speed, reduce experience time
-- High-speed loading of sound source
-- Progress bar on load screen
-- Lightweight Save File
+**Goal:** Major UI and Input Improvements.
 
-### ver 1.5
+-   Implement multilingual support.
+-   Full multi-touch input support.
+-   Ensure battle system compatibility with touch input.
+-   Full touch compliance for basic menus (e.g., equipment screen).
 
-Goal: Improve UI
-- Multilingual
-- Multi-touch
-- Battle system touch compliance
-- Touch correspondence of basic system such as equipment
+### **Version 2.0**
 
-## Constitution
-The core script is finally output to mainly 6 files.
-<dl>
-    <dt>rpg_core.js</dt>
-    <dd>Wrapper classes of Pixi.js and base classes such as audio and input processing.</dd>
-    <dt>rpg_managers.js</dt>
-    <dd>Static classes named XxxManager that manage the game overall.</dd>
-    <dt>rpg_objects.js</dt>
-    <dd>Classes named Game_Xxx dealing with game data (many are saved).</dd>
-    <dt>rpg_scenes.js</dt>
-    <dd>Classes named Scene_Xxx in which the scene is defined.</dd>
-    <dt>rpg_sprites.js</dt>
-    <dd>Classes named Sprite_Xxx related to image display and processing.</dd>
-    <dt>rpg_windows.js</dt>
-    <dd>Classes named Window_Xxx handling window display and input.</dd>
-</dl>
+**Goal:** Ace version.
 
-In addition, a plugin list is defined in *plugins.js*, and *main.js* launches the game.
+-   Port to latest Pixi.
+-   Supporting more platform (Electron, Tauri,etc)
 
-## Inheritance style
+## **🏛️ CoreScript Architecture**
 
-```js
-// In JavaScript this function is constructor
-function Derived() {
-    this.initialize.apply(this, arguments); // Delegate to initialize()
+The CoreScript is compiled and output into six primary files:
+
+-   **rpg_core.js**: Contains wrapper classes for **Pixi.js** and foundational classes for audio, input processing, and other core systems.
+-   **rpg_managers.js**: Houses static classes (named XxxManager) responsible for overall game management.
+-   **rpg_objects.js**: Defines classes (named Game_Xxx) that deal with game data. Most of these instances are serialized during game saving.
+-   **rpg_scenes.js**: Contains classes (named Scene_Xxx) where the game scenes (like title, map, battle) are defined.
+-   **rpg_sprites.js**: Includes classes (named Sprite_Xxx) related to image display and graphical processing.
+-   **rpg_windows.js**: Defines classes (named Window_Xxx) that handle window display, drawing, and input.
+
+Additionally, **\_plugins.js** defines the plugin list, and **\_main.js** is responsible for launching the game application.
+
+## **🧬 Inheritance Style**
+
+The engine uses a standard JavaScript prototype inheritance pattern for its class structure:
+
+// In JavaScript, this function serves as the constructor  
+function Derived() {  
+ this.initialize.apply(this, arguments); // Delegate arguments to initialize()  
 }
 
-Derived.prototype = Object.create(Base.prototype); // Derived inherits from Base
-Derived.prototype.constructor = Derived;
+Derived.prototype \= Object.create(Base.prototype); // Derived inherits from Base  
+Derived.prototype.constructor \= Derived;
 
-Derived.prototype.initialize = function () {
-    Base.prototype.initialize.call(this); // This makes super.initialize() sense
+Derived.prototype.initialize \= function () {  
+ Base.prototype.initialize.call(this); // Properly calls the superclass's initialize method  
 };
-```
 
-## Global variables
-Variables named `$dataXxx` are read from JSON in the *data* folder.
-These files are changed by the editor, but they are immutable during play.
-Variables named `$gameXxx` are instances of the class defined in *rpg_objects.js*.
-When saving the game, these objects (except `$gameTemp, $gameMessage, $gameTroop`) are serialized to JSON and saved.
-When loading, since the prototype chain is reconnected simultaneously with deserialization, you can continue using instance methods.
+## **🌐 Global Game Variables**
 
-## Scene graph
-The scene graph is a drawing tree like FLASH provided by Pixi.js.
-Children are influenced by parent's coordinates and visibility.
-Register a child in the form `(scene or sprite or window).addChild(child)`.
+The engine uses specific global variables for game data management:
 
-### Scene
-In RMMV the scene is the root element of the scene graph and has children with Sprite and Window.
-The life cycle is managed by `SceneManager`, and it operates up to one at the same time.
+-   **$dataXxx**: These read-only variables are loaded from the JSON files in the **data** folder (e.g., $dataMap, $dataItems). They are generated by the RPG Maker editor and remain **immutable** during gameplay.
+-   **$gameXxx**: These are live instances of classes defined in **rpg_objects.js** (e.g., $gamePlayer, $gameState). When a game is saved, these objects (excluding $gameTemp, $gameMessage, and $gameTroop) are serialized to JSON. The engine handles the **prototype chain reconnection** during loading, allowing instance methods to be called immediately upon deserialization.
 
-Life cycle: `new Scene_Xxx() -> create() -> start() -> update()* -> stop() -> terminate()`
+## **⚙️ Rendering and Execution Flow**
 
-## Flow
+### **Scene Graph**
 
-### Initialization
-1. When the page is loaded, call `SceneManager.run()`. *(main.js)*
-1. Initialize classes such as `Graphics, WebAudio, Input, TouchInput`.
-1. Set `Scene_Boot` to `SceneManager`.
-1. Register `SceneManager.update` in `requestAnimationFrame`.
+The engine utilizes the Pixi.js **Scene Graph**—a drawing tree structure—where children inherit positional and visibility attributes from their parents. You register elements using (scene or sprite or window).addChild(child).
 
-`requestAnimationFrame` is called by the browser at regular time intervals (every time drawing is required).
+-   **Scene:** A Scene_Xxx class is the root element of a scene graph, containing children like Sprites and Windows. The SceneManager manages the life cycle of scenes, running only one at a time.
+-   **Scene Life Cycle:** new Scene_Xxx() \-\> create() \-\> start() \-\> update()\* \-\> stop() \-\> terminate()
 
-### Update
-1. `requestAnimationFrame` calls `SceneManager.update()`.
-1. Process the current scene every 1/60 second according to the scene lifecycle rule
-1. If `Scene_Xxx.update()` is called, then
-    1. Call all children `update()`.
-    1. Children recursively call their children `update()`.
-1. Render the scene (including its children) onto the screen.
-1. Register `SceneManager.update` in `requestAnimationFrame`.
+### **Game Initialization**
 
+1. The application starts by calling **SceneManager.run()** (\_main.js).
+2. Core classes (Graphics, WebAudio, Input, TouchInput) are initialized.
+3. **Scene_Boot** is set as the initial scene in the SceneManager.
+4. SceneManager.update is registered with the browser's **requestAnimationFrame** loop.
 
-## License
-This content is released under the (http://opensource.org/licenses/MIT) MIT License.
+### **Game Loop (Update)**
+
+The requestAnimationFrame callback drives the game loop:
+
+1. **SceneManager.update()** is called by the browser at its optimal rendering interval.
+2. The current scene is processed at a stable **60 FPS** (or 1/60 second) according to the scene life cycle rules.
+3. When a scene's Scene_Xxx.update() method is called:
+    - It calls the update() method on all of its children.
+    - Children recursively call update() on their own children, propagating the update logic down the graph.
+4. The entire scene graph is then rendered to the screen.
+5. SceneManager.update is re-registered for the next frame.
+
+## **📝 License**
+
+This project is released under the [**MIT License**](http://opensource.org/licenses/MIT).

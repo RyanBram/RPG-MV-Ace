@@ -36,14 +36,6 @@
  * @type number
  * @desc If set, change window height to this value
  *
- * @param renderingMode
- * @type select
- * @option canvas
- * @option webgl
- * @option auto
- * @desc The rendering mode (canvas/webgl/auto)
- * @default auto
- *
  * @param alwaysDash
  * @type boolean
  * @desc The initial value whether the player always dashes (on/off)
@@ -123,14 +115,6 @@
  * @text ウィンドウの高さ
  * @desc 値が設定されなかった場合、ゲーム画面の高さと同じ
  *
- * @param renderingMode
- * @type select
- * @option canvas
- * @option webgl
- * @option auto
- * @text レンダリングモード
- * @default auto
- *
  * @param alwaysDash
  * @type boolean
  * @text 「常時ダッシュ」の初期値
@@ -189,7 +173,6 @@
     var cacheLimit = toNumber(parameters['cacheLimit'], 10);
     var screenWidth = toNumber(parameters['screenWidth'], 816);
     var screenHeight = toNumber(parameters['screenHeight'], 624);
-    var renderingMode = parameters['renderingMode'].toLowerCase();
     var alwaysDash = (parameters['alwaysDash'] === 'true') ||(parameters['alwaysDash'] === 'on');
     var textSpeed = toNumber(parameters['textSpeed'], 1);
     var windowWidthTo = toNumber(parameters['changeWindowWidthTo'], 0);
@@ -222,20 +205,6 @@
     SceneManager._boxWidth = screenWidth;
     SceneManager._boxHeight = screenHeight;
 
-    SceneManager.preferableRendererType = function() {
-        if (Utils.isOptionValid('canvas')) {
-            return 'canvas';
-        } else if (Utils.isOptionValid('webgl')) {
-            return 'webgl';
-        } else if (renderingMode === 'canvas') {
-            return 'canvas';
-        } else if (renderingMode === 'webgl') {
-            return 'webgl';
-        } else {
-            return 'auto';
-        }
-    };
-
     var _ConfigManager_applyData = ConfigManager.applyData;
     ConfigManager.applyData = function(config) {
         _ConfigManager_applyData.apply(this, arguments);
@@ -254,7 +223,7 @@
     SceneManager.initNwjs = function() {
         _SceneManager_initNwjs.apply(this, arguments);
 
-        if (Utils.isNwjs() && windowWidth && windowHeight) {
+        if (Utils.isNwjs() && (windowWidth || windowHeight)) {
             var dw = windowWidth - window.innerWidth;
             var dh = windowHeight - window.innerHeight;
             window.moveBy(-dw / 2, -dh / 2);

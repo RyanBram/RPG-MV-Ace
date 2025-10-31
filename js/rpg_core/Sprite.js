@@ -13,7 +13,7 @@ function Sprite() {
 Sprite.prototype = Object.create(PIXI.Sprite.prototype);
 Sprite.prototype.constructor = Sprite;
 
-Sprite.voidFilter = new PIXI.filters.VoidFilter();
+Sprite.voidFilter = new PIXI.filters.AlphaFilter();
 
 Sprite.prototype.initialize = function(bitmap) {
     var texture = new PIXI.Texture(new PIXI.BaseTexture());
@@ -394,57 +394,14 @@ Sprite.prototype._executeTint = function(x, y, w, h) {
 };
 
 Sprite.prototype._renderCanvas_PIXI = PIXI.Sprite.prototype._renderCanvas;
-Sprite.prototype._renderWebGL_PIXI = PIXI.Sprite.prototype._renderWebGL;
+Sprite.prototype._renderWebGL_PIXI = PIXI.Sprite.prototype._render;
 
 /**
- * @method _renderCanvas
+ * @method _render
  * @param {Object} renderer
  * @private
  */
-Sprite.prototype._renderCanvas = function(renderer) {
-    if (this.bitmap) {
-        this.bitmap.touch();
-    }
-    if(this.bitmap && !this.bitmap.isReady()){
-        return;
-    }
-
-    if (this.texture.frame.width > 0 && this.texture.frame.height > 0) {
-        this._renderCanvas_PIXI(renderer);
-    }
-};
-
-/**
- * checks if we need to speed up custom blendmodes
- * @param renderer
- * @private
- */
-Sprite.prototype._speedUpCustomBlendModes = function(renderer) {
-    var picture = renderer.plugins.picture;
-    var blend = this.blendMode;
-    if (renderer.renderingToScreen && renderer._activeRenderTarget.root) {
-        if (picture.drawModes[blend]) {
-            var stage = renderer._lastObjectRendered;
-            var f = stage._filters;
-            if (!f || !f[0]) {
-                setTimeout(function () {
-                    var f = stage._filters;
-                    if (!f || !f[0]) {
-                        stage.filters = [Sprite.voidFilter];
-                        stage.filterArea = new PIXI.Rectangle(0, 0, Graphics.width, Graphics.height);
-                    }
-                }, 0);
-            }
-        }
-    }
-};
-
-/**
- * @method _renderWebGL
- * @param {Object} renderer
- * @private
- */
-Sprite.prototype._renderWebGL = function(renderer) {
+Sprite.prototype._render = function(renderer) {
     if (this.bitmap) {
         this.bitmap.touch();
     }
@@ -459,16 +416,12 @@ Sprite.prototype._renderWebGL = function(renderer) {
         //copy of pixi-v4 internal code
         this.calculateVertices();
 
-        if (this.pluginName === 'sprite' && this._isPicture) {
-            // use heavy renderer, which reduces artifacts and applies corrent blendMode,
-            // but does not use multitexture optimization
-            this._speedUpCustomBlendModes(renderer);
-            renderer.setObjectRenderer(renderer.plugins.picture);
-            renderer.plugins.picture.render(this);
+        if (this._isPicture) {
+            PIXI.picture.Sprite.prototype._render.apply(this, arguments);
         } else {
             // use pixi super-speed renderer
-            renderer.setObjectRenderer(renderer.plugins[this.pluginName]);
-			renderer.plugins[this.pluginName].render(this);
+            renderer.batch.setObjectRenderer(renderer.plugins[this.pluginName]);
+            renderer.plugins[this.pluginName].render(this);
         }
     }
 };
