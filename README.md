@@ -113,21 +113,21 @@ Development progresses according to the following plan. We are currently focusin
 -   Add a progress bar to the load screen.
 -   Implement a lightweight save file format.
 
-### **Version 1.5 (Current Focus)**
+### **Version 1.5 (Completed)**
 
 **Goal:** Major UI and Input Improvements.
 
--   Implement multilingual support.
 -   Full multi-touch input support.
 -   Ensure battle system compatibility with touch input.
 -   Full touch compliance for basic menus (e.g., equipment screen).
 
-### **Version 2.0**
+### **Version 2.0 (Current Focus)**
 
 **Goal:** Ace version.
 
 -   Port to latest Pixi.
 -   Supporting more platform (Electron, Tauri,etc)
+-   Implement multilingual support.
 
 ## **🏛️ CoreScript Architecture**
 
