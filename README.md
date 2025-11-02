@@ -1,18 +1,90 @@
 # **RPG Maker MV Ace: The Community CoreScript**
 
-![Banner](https://raw.githubusercontent.com/RyanBram/RPG-Maker-MV-Ace/refs/heads/master/docs/RPGMVAce.png)
+![Banner](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/Project%20Ace.png)
 
-## **🚀 Introduction**
+Welcome to **Project Ace**!
 
-**RPG Maker MV Ace** is a community-driven continuation and enhancement of the original **RPG Maker MV** core engine. It functions as a powerful HTML5 game engine specifically designed for 2D games, ensuring seamless deployment across **desktop, mobile, and browser** platforms.
+RPG Maker MV was a revolutionary engine, bringing JavaScript and HTML5 to the forefront of indie game development. However, as technology races forward, its core has begun to show its age.
 
-RPG Maker is a legendary series with over 20 years of history, powering thousands of games. Ace is committed to improving the foundation of the modern, HTML5-based MV version.
+Project Ace is our answer.
 
-## **💡 Project Mission**
+This is not just a patch. It's a comprehensive, top-to-bottom modernization effort. We are forging a new path to ensure that the RMMV codebase remains relevant, powerful, and incredibly versatile for years to come. Our mission is to preserve the spirit of RMMV while infusing it with the performance and features of a modern game engine.
 
-This project is dedicated to collaboratively improving the **RPG Maker MV CoreScript** with the goal of providing a more robust, efficient, and well-maintained foundation for all game creators.
+## The "Multi" Philosophy: Our Guiding Star
 
-Recognizing that the RPG Maker MV ecosystem is heavily reliant on **community plugins**, the development of the Ace version prioritizes **minimizing breaking changes** to ensure backward compatibility and a smooth transition for existing projects.
+The "MV" in RPG Maker MV is often said to mean "Multi-Version." We are taking this philosophy to its absolute extreme. Project Ace is built on a foundation of "Multi" principles, expanding the engine's capabilities in every conceivable direction.
+
+---
+
+## 🌟 Core Features 🌟
+
+### 🚀 Multi-Renderer: Next-Generation Graphics
+
+We are undertaking the massive effort of porting the engine core from Pixi.js v4 to the upcoming **Pixi.js v8**. This isn't just an update; it's a quantum leap.
+
+By harnessing the power of **WebGPU**, Project Ace will unlock true native-speed graphics:
+
+-   **DirectX 12** on Windows
+-   **Metal** on macOS
+-   **Vulkan** on Linux
+
+For platforms that aren't quite there yet, the engine will seamlessly fall back to WebGL (OpenGL ES), ensuring your game runs everywhere. The result is unprecedented rendering performance and visual fidelity.
+
+### 🖥️ Multi-Resolution: Your Game, Any Screen
+
+Forget fixed resolutions and black bars. Project Ace introduces true **fluid scaling**, allowing your game to look sharp and perfectly adapt to a vast array of resolutions and aspect ratios.
+
+Even better, the engine supports **instantaneous layout updates** when the game window is resized, creating a flawless, professional, and responsive experience for your players.
+
+### 📦 Multi-Platform: Build & Deploy Everywhere
+
+We're breaking free from the traditional build pipeline. Project Ace provides unparalleled flexibility by adding first-class support for modern desktop wrappers:
+
+-   **ElectronJS:** The robust, industry-standard solution for feature-rich desktop apps.
+-   **Tauri:** The future of lightweight apps. By leveraging the OS's _native webview engine_, Tauri can **dramatically reduce your game's final package size** (often by over 100MB!), making distribution a breeze.
+
+### 🎵 Multi-Format: An Audio Powerhouse
+
+Unleash your creativity with our custom **`rpg_mixer.js`** plugin. This revolutionary audio system dynamically loads backends _only when needed_, keeping your game's initial load light and fast.
+
+Out of the box, we already support:
+
+-   **MIDI (.mid, .rmi):** Beautifully rendered via the **SpessaSynth** backend.
+-   **Tracker Music (.mod, .s3m, .xm, .it, .mptm, .mo3):** Flawless playback powered by the legendary **OpenMPT (libopenmpt)**.
+
+The architecture is built for growth. Adding new audio formats is as simple as plugging in a new backend!
+
+### 🌍 Multi-Language: Go Global, Effortlessly
+
+Reach a worldwide audience with our integrated **`rpg_locale.js`** plugin. This isn't just a simple string replacer; it's a complete localization suite, supercharged by the **Translation Helper**.
+
+-   **Auto-Extract:** Intelligently pulls all user-facing text from your game's `.json` database files.
+-   **Automate & Edit:** Send text to machine translation services (like Google Translate or DeepL) for a quick first pass, then edit manually for quality.
+-   **Built-in Tools:** Includes a local translator tool to assist your team's workflow. Localization has never been this streamlined.
+
+### 🕹️ Multi-Input: Total Player Control
+
+We've completely overhauled RMMV's input handling for a smoother, more intuitive experience on keyboard, mouse, and touch.
+
+But the crown jewel is the **RPG Player**:
+
+-   **A Universal HTML5 Player:** Embed your game on your website or game portal (like Itch.io or Newgrounds) with the same ease as a YouTube video!
+-   **Full-Featured UI:** Includes standard controls (Play, Stop, Fullscreen), a volume slider, and on-screen **Virtual Buttons** for mobile web.
+-   **Professional Polish:** Display a beautiful **Cover Art** image while the game loads, giving your players a premium experience from the very first click.
+
+### 🧩 Multi-Genre: Shatter the "RPG" Label
+
+RPG Maker is no longer _just_ for RPGs. Project Ace will actively curate, adapt, and provide high-quality templates to kickstart your project in _any_ genre. Imagine building:
+
+-   Visual Novels
+-   Strategy RPGs (SRPGs)
+-   Side-scrolling Platformers
+-   Intense Bullet Hell (Shmup)
+-   Action RPGs (ARPGs)
+-   Collectible Card Games
+-   ...And so much more! The only limit is your imagination.
+
+---
 
 ## **💾 Releases & Usage**
 
@@ -65,11 +137,11 @@ We welcome contributors\! If you'd like to join the effort, please keep these gu
 
 -   **Language:** All discussions, documentation, and code comments use **English** as the primary language.
 -   **Code Standard:** To maintain maximum **plugin compatibility**, all CoreScript development is done using **ECMAScript 5 (ES5)**.
--   **Governance:** This is a newly forming project. Development standards and major decisions are determined collaboratively through community discussion.
+-   **Financial Support:** If you believe in our vision and wish to accelerate Project Ace's development, please consider offering financial support.
 
 ## **🗺️ Roadmap**
 
-Development progresses according to the following plan. We are currently focusing on **Version 1.5**.
+Development progresses according to the following plan. We are currently focusing on **Version 2.0 (MV Ace)**.
 
 ### **Version 1.0 (Completed)**
 
@@ -123,11 +195,24 @@ Development progresses according to the following plan. We are currently focusin
 
 ### **Version 2.0 (Current Focus)**
 
-**Goal:** Ace version.
+**Goal:** Ace version (2.0) — "Ace" is a preservation and modernisation release celebrating 10 years of RPG Maker MV.
 
--   Port to latest Pixi.
--   Supporting more platform (Electron, Tauri,etc)
--   Implement multilingual support.
+This release upgrades the rendering core to Pixi v7 (2025), modernizes rendering and layout, and expands platform and audio format support while keeping backward compatibility as a priority.
+
+Highlights
+
+-   Pixi v7 (2025): The engine now targets Pixi v7, aligning the CoreScript with current rendering standards and performance improvements.
+-   Fluid Aspect Ratio: Automatic layout adjustments that adapt game UI and render scaling according to the window aspect ratio for better cross-device presentation.
+-   Multi-format audio: Restored support for standard MIDI (via the spessasynth_lib backend) and added tracker module playback (MOD, S3M, XM, IT, MPTM, MO3) using libopenmpt.
+-   Multi-language (i18n): Built-in i18n support via the `rpg_locale` plugin and a local translator helper that enables quick, offline rough translations for development and testing.
+-   Multi-platform web player: An HTML web player target that brings web-first features (playback controls and telemetry-friendly playback similar to video players) to give authors more control over distribution and playback.
+
+## Future Work
+
+-   Multi-genre templates: Provide templates and building blocks for platformers, bullet-hell, visual novels, SRPG, and ARPG to accelerate genre-specific development.
+-   Pixi v8 / WebGPU: Preparatory work and future porting plans to take advantage of WebGPU when Pixi v8 stabilizes.
+
+Compatibility note: Ace is designed to preserve plugin compatibility and minimize breaking changes for existing RPG Maker MV projects. When upgrading, test projects and community plugins in a staging environment.
 
 ## **🏛️ CoreScript Architecture**
 
@@ -195,4 +280,24 @@ The requestAnimationFrame callback drives the game loop:
 
 ## **📝 License**
 
-This project is released under the [**MIT License**](http://opensource.org/licenses/MIT).
+This project is released under the [**Apache License**](https://www.apache.org/licenses/LICENSE-2.0.txt).
+
+<a href="https://www.patreon.com/c/projectmvace"><p align="center">
+<img src="https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/ProjectAce%20Support.png" /></p></a>
+
+## Acknowledgments & Special Thanks
+
+Project Ace is a labor of love, built upon the incredible foundation laid by the original creators of RPG Maker MV. This project would not exist without their groundbreaking work.
+
+We extend our deepest gratitude and respect to:
+
+-   **Mr. Yoji Ojima (尾島陽児):** The legendary creator and visionary father of the RPG Maker series.
+-   **KADOKAWA CORPORATION:** The publisher and company that stewards the RPG Maker legacy, bringing this powerful tool to creators across the world.
+
+---
+
+**Legal Disclaimer**
+
+_Project Ace is an independent, community-driven project and is not affiliated with, authorized, endorsed by, or in any way officially connected with KADOKAWA CORPORATION._
+
+_RPG Maker™, RPG Maker MV™, and all related names and trademarks are the property of KADOKAWA CORPORATION._

@@ -1,35 +1,64 @@
-# RPGMakerMV corescript "Community-1.5 (Pixi v5)" Release Notes
+# RPGMakerMV corescript "Community-2.0 (Pixi v7)" Release Notes
 
-## Summary
+This release marks the "Ace" (v2.0) milestone — a modernisation and preservation release celebrating the 10-year legacy of RPG Maker MV. The primary achievement for this release is a successful migration from earlier Pixi versions to Pixi v7 (2025), together with several platform, audio, and internationalisation improvements.
 
-This release upgrades the rendering core to Pixi v5 and brings a set of touch-focused improvements and UI fixes. The Pixi v5 migration delivers meaningful rendering and performance gains (especially when running with WebGL), reduces render-related CPU/GPU overhead, and improves stability across modern desktop and mobile browsers. Additionally, touch input now supports scroll gestures and the menu system has been optimized for touch devices and different display resolutions.
+Highlights
 
-## Features
+-   Pixi v7 (2025): Upgraded rendering core to Pixi v7 to align with modern web rendering APIs and performance improvements.
+-   Fluid Aspect Ratio: New layout system that adapts UI and rendering to the current window aspect ratio to produce consistent layouts across devices and resolutions.
+-   Multi-format audio: Reintroduced MIDI support (standard RPG Maker audio format) using the spessasynth_lib backend. Added tracker music playback (MOD, S3M, XM, IT, MPTM, MO3) via libopenmpt for richer legacy music support.
+-   Multi-language (i18n): Added `rpg_locale` plugin plus a local translator helper for fast, offline rough translations — ideal for development and testing without internet access.
+-   Web HTML Player: Added a web player build target that provides player-like playback controls and distribution options, giving creators a web-first way to publish and control game playback.
 
--   Upgraded rendering engine from Pixi v4 to Pixi v5 — improved rendering performance, better WebGL stability, and reduced overhead on supported platforms.
--   Touch Input: added touch-scroll support for scrolling windows and lists using swipe gestures.
--   Touch-optimized menus: menu layouts, hit targets, and input handling were adjusted for a smoother touch experience on phones and tablets.
--   Image preload & memory helpers: improved background image preloading and basic memory usage controls to help reduce stalls and keep memory usage within configurable limits.
+Planned next steps
 
-## Changes
+-   Multi-genre templates and building blocks for platformers, bullet-hell, visual novels, SRPG and ARPG.
+-   Porting to Pixi v8 with WebGPU support once the ecosystem stabilizes.
 
--   Migrated Pixi integration to v5 and updated rendering pipelines where required to take advantage of new Pixi APIs.
--   WebGL rendering is used more broadly when available, which results in higher frame rates and better visual fidelity on modern devices.
--   Improved touch gesture handling: drag-to-scroll is now supported, and accidental taps are reduced by refined gesture thresholds.
--   Menus and UI scale more reliably across different resolutions and aspect ratios; layout calculations were hardened to avoid misaligned elements on non-standard displays.
+This document includes earlier release notes below for historical context.
 
-## Fixes
+## Overview (v2.0 / Ace)
 
--   Window masking now works correctly.
--   Title background and battleback now scale correctly with resolution.
--   Battler positions adapt properly to aspect ratio and resolution.
+Version 2.0 (Ace) modernises the CoreScript with a migration to Pixi v7 (2025) and introduces a set of platform, audio, layout, and internationalisation improvements while preserving backwards compatibility for existing projects.
 
---
+This section summarises the practical changes, features, and recommended testing notes for the Ace release.
 
-Notes: Upgrading to Pixi v5 is the primary performance improvement in this release — if you test on mobile or low-end hardware you should notice smoother rendering and less UI jitter when WebGL is available. Please test menus and touch scrolling on multiple screen sizes and report any layout or input regressions.
+## What's new
+
+-   Pixi v7 (2025): The rendering core is upgraded to Pixi v7 to benefit from current web-rendering APIs, improved renderer performance and better long-term compatibility with modern browsers.
+-   Fluid Aspect Ratio: A new layout approach that adapts UI and render scaling to the window aspect ratio so games display consistently across window sizes and device screens.
+-   Multi-format audio: Restored MIDI support (standard RPG Maker format) via the spessasynth_lib backend and added tracker module playback (MOD, S3M, XM, IT, MPTM, MO3) through libopenmpt for legacy tracker formats.
+-   Internationalisation (i18n): Built-in support via the `rpg_locale` plugin and a local translator helper that enables quick, offline rough translations for development and QA.
+-   Web HTML Player: A new web player build target that exposes player-like controls and distribution-friendly features to make web publishing and playback control easier.
+
+## Features & improvements
+
+-   Rendering: updated rendering pipelines and asset handling to make use of Pixi v7 improvements.
+-   Layout: fluid aspect ratio handling and hardened layout calculations to reduce misalignment on non-standard displays.
+-   Audio: pluggable audio backends with MIDI and tracker format support plus improved fallback handling for browsers without native support.
+-   Input: improved touch gesture handling (drag-to-scroll, refined tap thresholds) and better touch-optimized UI hit targets.
+-   Memory & loading: improved image preloading and memory helpers to reduce stalls and load-time regressions on constrained devices.
+
+## Technical changes
+
+-   Migrated Pixi integration and adjusted rendering codepaths to match Pixi v7 APIs and lifecycle.
+-   Added audio backends: spessasynth_lib for MIDI and libopenmpt for tracker formats, with configuration hooks for developers.
+-   Implemented fluid aspect ratio utilities and new layout helpers used by core UI classes.
+-   Introduced `rpg_locale` plugin and a translator helper script for offline development translations.
+-   Added a web player build target and wiring for optional web-only controls.
+
+## Fixes and compatibility notes
+
+-   Fixed: window masking, title/background scaling, and battler positioning to better respect varying aspect ratios.
+-   Fixed: several touch and input edge-cases introduced by arbitrary window resizing.
+-   Compatibility: Ace aims to minimise breaking changes; however plugin authors should test plugin behaviour in a staging environment. See the upgrade checklist (TODO) for common plugin compatibility checks.
+
+---
+
+Notes: This release focuses on modernising the rendering and platform experience (Pixi v7) while expanding audio and i18n support. When testing, verify rendering, input, audio playback (MIDI and tracker samples), and layout on multiple devices and aspect ratios.
 
 ## Committers
 
-木星ペンギン, Ru たん, Ryan Bram
+Ryan Bram, 木星ペンギン, Ru たん,
 
 ## How to test
