@@ -6,34 +6,35 @@
  * @constructor
  */
 function WindowLayer() {
-    this.initialize.apply(this, arguments);
+  this.initialize.apply(this, arguments);
 }
 
 WindowLayer.prototype = Object.create(PIXI.Container.prototype);
 WindowLayer.prototype.constructor = WindowLayer;
 
-WindowLayer.prototype.initialize = function() {
-    PIXI.Container.call(this);
-    this._width = 0;
-    this._height = 0;
+WindowLayer.prototype.initialize = function () {
+  var baseInstance = new PIXI.Container();
+  Object.assign(this, baseInstance);
+  this._width = 0;
+  this._height = 0;
 
-    this._windowMask = new PIXI.Graphics();
-    this._windowMask.beginFill(0xffffff, 1);
-    this._windowMask.drawRect(0, 0, 0, 0);
-    this._windowMask.endFill();
-    this._windowRect = this._windowMask.geometry.graphicsData[0].shape;
-    this._windowMaskShift = new PIXI.Point();
+  this._windowMask = new PIXI.Graphics();
+  this._windowMask.beginFill(0xffffff, 1);
+  this._windowMask.drawRect(0, 0, 0, 0);
+  this._windowMask.endFill();
+  this._windowRect = this._windowMask.geometry.graphicsData[0].shape;
+  this._windowMaskShift = new PIXI.Point();
 
-    this.filterArea = new PIXI.Rectangle();
-    this.filters = [WindowLayer.voidFilter];
+  this.filterArea = new PIXI.Rectangle();
+  this.filters = [WindowLayer.voidFilter];
 
-    //temporary fix for memory leak bug
-    this.on('removed', this.onRemoveAsAChild);
+  //temporary fix for memory leak bug
+  this.on("removed", this.onRemoveAsAChild);
 };
 
-WindowLayer.prototype.onRemoveAsAChild = function() {
-    this.removeChildren();
-}
+WindowLayer.prototype.onRemoveAsAChild = function () {
+  this.removeChildren();
+};
 
 WindowLayer.voidFilter = new PIXI.filters.AlphaFilter();
 
@@ -43,14 +44,14 @@ WindowLayer.voidFilter = new PIXI.filters.AlphaFilter();
  * @property width
  * @type Number
  */
-Object.defineProperty(WindowLayer.prototype, 'width', {
-    get: function() {
-        return this._width;
-    },
-    set: function(value) {
-        this._width = value;
-    },
-    configurable: true
+Object.defineProperty(WindowLayer.prototype, "width", {
+  get: function () {
+    return this._width;
+  },
+  set: function (value) {
+    this._width = value;
+  },
+  configurable: true,
 });
 
 /**
@@ -59,14 +60,14 @@ Object.defineProperty(WindowLayer.prototype, 'width', {
  * @property height
  * @type Number
  */
-Object.defineProperty(WindowLayer.prototype, 'height', {
-    get: function() {
-        return this._height;
-    },
-    set: function(value) {
-        this._height = value;
-    },
-    configurable: true
+Object.defineProperty(WindowLayer.prototype, "height", {
+  get: function () {
+    return this._height;
+  },
+  set: function (value) {
+    this._height = value;
+  },
+  configurable: true,
 });
 
 /**
@@ -78,11 +79,11 @@ Object.defineProperty(WindowLayer.prototype, 'height', {
  * @param {Number} width The width of the window layer
  * @param {Number} height The height of the window layer
  */
-WindowLayer.prototype.move = function(x, y, width, height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+WindowLayer.prototype.move = function (x, y, width, height) {
+  this.x = x;
+  this.y = y;
+  this.width = width;
+  this.height = height;
 };
 
 /**
@@ -90,12 +91,12 @@ WindowLayer.prototype.move = function(x, y, width, height) {
  *
  * @method update
  */
-WindowLayer.prototype.update = function() {
-    this.children.forEach(function(child) {
-        if (child.update) {
-            child.update();
-        }
-    });
+WindowLayer.prototype.update = function () {
+  this.children.forEach(function (child) {
+    if (child.update) {
+      child.update();
+    }
+  });
 };
 
 /**
@@ -103,53 +104,53 @@ WindowLayer.prototype.update = function() {
  * @param {Object} renderSession
  * @private
  */
-WindowLayer.prototype.render = function(renderer) {
-    if (!this.visible || !this.renderable) return;
-    if (this.children.length === 0) return;
+WindowLayer.prototype.render = function (renderer) {
+  if (!this.visible || !this.renderable) return;
+  if (this.children.length === 0) return;
 
-    // var sourceFrame = renderer.renderTexture.sourceFrame;
-    // var projectionMatrix = renderer.projection.projectionMatrix;
-    // this._windowMaskShift.x = Math.round((projectionMatrix.tx + 1) / 2 * sourceFrame.width);
-    // this._windowMaskShift.y = Math.round((projectionMatrix.ty - 1) / 2 * sourceFrame.height);
-    renderer.batch.flush();
+  // var sourceFrame = renderer.renderTexture.sourceFrame;
+  // var projectionMatrix = renderer.projection.projectionMatrix;
+  // this._windowMaskShift.x = Math.round((projectionMatrix.tx + 1) / 2 * sourceFrame.width);
+  // this._windowMaskShift.y = Math.round((projectionMatrix.ty - 1) / 2 * sourceFrame.height);
+  renderer.batch.flush();
 
-    const gl = renderer.gl;
-    gl.enable(gl.STENCIL_TEST);
+  const gl = renderer.gl;
+  gl.enable(gl.STENCIL_TEST);
 
-    for (var i = this.children.length - 1; i >= 0; --i) {
-        var child = this.children[i];
-        if (child._isWindow && child.visible && child.openness > 0) {
-            gl.stencilFunc(gl.EQUAL, 0, 0xff);
-            gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
-            child.render(renderer);
-            renderer.batch.flush();
+  for (var i = this.children.length - 1; i >= 0; --i) {
+    var child = this.children[i];
+    if (child._isWindow && child.visible && child.openness > 0) {
+      gl.stencilFunc(gl.EQUAL, 0, 0xff);
+      gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
+      child.render(renderer);
+      renderer.batch.flush();
 
-            this._maskWindow(child, this._windowMaskShift);
+      this._maskWindow(child, this._windowMaskShift);
 
-            gl.stencilFunc(gl.ALWAYS, 1, 0xff);
-            gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
-            gl.colorMask(false, false, false, false);
-            gl.depthMask(false);
-            this._windowMask.render(renderer);
-            renderer.batch.flush();
-            gl.colorMask(true, true, true, true);
-            gl.depthMask(true);
-        }
+      gl.stencilFunc(gl.ALWAYS, 1, 0xff);
+      gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
+      gl.colorMask(false, false, false, false);
+      gl.depthMask(false);
+      this._windowMask.render(renderer);
+      renderer.batch.flush();
+      gl.colorMask(true, true, true, true);
+      gl.depthMask(true);
     }
+  }
 
-    gl.clearStencil(0);
-    gl.clear(gl.STENCIL_BUFFER_BIT);
-    gl.disable(gl.STENCIL_TEST);
+  gl.clearStencil(0);
+  gl.clear(gl.STENCIL_BUFFER_BIT);
+  gl.disable(gl.STENCIL_TEST);
 
-    renderer.batch.flush();
+  renderer.batch.flush();
 
-    for (var j = 0; j < this.children.length; j++) {
-        if (!this.children[j]._isWindow) {
-            this.children[j].render(renderer);
-        }
+  for (var j = 0; j < this.children.length; j++) {
+    if (!this.children[j]._isWindow) {
+      this.children[j].render(renderer);
     }
+  }
 
-    renderer.batch.flush();
+  renderer.batch.flush();
 };
 
 /**
@@ -157,16 +158,19 @@ WindowLayer.prototype.render = function(renderer) {
  * @param {Window} window
  * @private
  */
-WindowLayer.prototype._maskWindow = function(window, shift) {
-    this._windowMask.clear();
-    this._windowMask.beginFill(0xffffff);
-    this._windowMask.drawRect(
-        this.x + shift.x + window.x,
-        this.y + shift.y + window.y + window.height / 2 * (1 - window._openness / 255),
-        window.width,
-        window.height * window._openness / 255
-    );
-    this._windowMask.endFill();
+WindowLayer.prototype._maskWindow = function (window, shift) {
+  this._windowMask.clear();
+  this._windowMask.beginFill(0xffffff);
+  this._windowMask.drawRect(
+    this.x + shift.x + window.x,
+    this.y +
+      shift.y +
+      window.y +
+      (window.height / 2) * (1 - window._openness / 255),
+    window.width,
+    (window.height * window._openness) / 255
+  );
+  this._windowMask.endFill();
 };
 
 // The important members from Pixi.js

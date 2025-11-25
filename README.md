@@ -1,6 +1,6 @@
 # **RPG Maker MV Ace: The Community CoreScript**
 
-![Banner](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/Project%20Ace.png)
+![Banner](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/docs/img/Project%20Ace.png)
 
 Welcome to **Project Ace**!
 
@@ -23,10 +23,7 @@ The "MV" in RPG Maker MV is often said to mean "Multi-View." We are taking this 
 We are undertaking the massive effort of porting the engine core from Pixi.js v4 to the **Pixi.js v8**. This isn't just an update; it's a quantum leap.
 
 By harnessing the power of **WebGPU**, Project Ace will unlock true native-speed graphics:
-
--   **DirectX 12** on Windows
--   **Metal** on macOS
--   **Vulkan** on Linux
+![WebGPU](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/docs/img/WebGPU.png)
 
 For platforms that aren't quite there yet, the engine will seamlessly fall back to WebGL (OpenGL ES), ensuring your game runs everywhere. The result is unprecedented rendering performance and visual fidelity.
 
@@ -276,7 +273,7 @@ This project is released under the [**Apache License**](https://www.apache.org/l
 
 <p align="center">
   <a href="https://www.patreon.com/c/projectmvace" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/ProjectAce%20Support.png" alt="Support Us">
+    <img src="https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/docs/img/ProjectAce%20Support.png" alt="Support Us">
   </a>
 </p>
 

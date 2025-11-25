@@ -7,31 +7,32 @@
  * @param {Bitmap} bitmap The image for the tiling sprite
  */
 function TilingSprite() {
-    this.initialize.apply(this, arguments);
+  this.initialize.apply(this, arguments);
 }
 
 TilingSprite.prototype = Object.create(PIXI.TilingSprite.prototype);
 TilingSprite.prototype.constructor = TilingSprite;
 
-TilingSprite.prototype.initialize = function(bitmap) {
-    var texture = new PIXI.Texture(new PIXI.BaseTexture());
+TilingSprite.prototype.initialize = function (bitmap) {
+  var texture = new PIXI.Texture(new PIXI.BaseTexture());
 
-    PIXI.TilingSprite.call(this, texture);
+  var baseInstance = new PIXI.TilingSprite(texture);
+  Object.assign(this, baseInstance);
 
-    this._bitmap = null;
-    this._width = 0;
-    this._height = 0;
-    this._frame = new Rectangle();
-    this.spriteId = Sprite._counter++;
-    /**
-     * The origin point of the tiling sprite for scrolling.
-     *
-     * @property origin
-     * @type Point
-     */
-    this.origin = new Point();
+  this._bitmap = null;
+  this._width = 0;
+  this._height = 0;
+  this._frame = new Rectangle();
+  this.spriteId = Sprite._counter++;
+  /**
+   * The origin point of the tiling sprite for scrolling.
+   *
+   * @property origin
+   * @type Point
+   */
+  this.origin = new Point();
 
-    this.bitmap = bitmap;
+  this.bitmap = bitmap;
 };
 
 /**
@@ -40,21 +41,21 @@ TilingSprite.prototype.initialize = function(bitmap) {
  * @property bitmap
  * @type Bitmap
  */
-Object.defineProperty(TilingSprite.prototype, 'bitmap', {
-    get: function() {
-        return this._bitmap;
-    },
-    set: function(value) {
-        if (this._bitmap !== value) {
-            this._bitmap = value;
-            if (this._bitmap) {
-                this._bitmap.addLoadListener(this._onBitmapLoad.bind(this));
-            } else {
-                this.texture.frame = Rectangle.emptyRectangle;
-            }
-        }
-    },
-    configurable: true
+Object.defineProperty(TilingSprite.prototype, "bitmap", {
+  get: function () {
+    return this._bitmap;
+  },
+  set: function (value) {
+    if (this._bitmap !== value) {
+      this._bitmap = value;
+      if (this._bitmap) {
+        this._bitmap.addLoadListener(this._onBitmapLoad.bind(this));
+      } else {
+        this.texture.frame = Rectangle.emptyRectangle;
+      }
+    }
+  },
+  configurable: true,
 });
 
 /**
@@ -63,14 +64,14 @@ Object.defineProperty(TilingSprite.prototype, 'bitmap', {
  * @property opacity
  * @type Number
  */
-Object.defineProperty(TilingSprite.prototype, 'opacity', {
-    get: function() {
-        return this.alpha * 255;
-    },
-    set: function(value) {
-        this.alpha = value.clamp(0, 255) / 255;
-    },
-    configurable: true
+Object.defineProperty(TilingSprite.prototype, "opacity", {
+  get: function () {
+    return this.alpha * 255;
+  },
+  set: function (value) {
+    this.alpha = value.clamp(0, 255) / 255;
+  },
+  configurable: true,
 });
 
 /**
@@ -78,12 +79,12 @@ Object.defineProperty(TilingSprite.prototype, 'opacity', {
  *
  * @method update
  */
-TilingSprite.prototype.update = function() {
-    this.children.forEach(function(child) {
-        if (child.update) {
-            child.update();
-        }
-    });
+TilingSprite.prototype.update = function () {
+  this.children.forEach(function (child) {
+    if (child.update) {
+      child.update();
+    }
+  });
 };
 
 /**
@@ -95,11 +96,11 @@ TilingSprite.prototype.update = function() {
  * @param {Number} width The width of the tiling sprite
  * @param {Number} height The height of the tiling sprite
  */
-TilingSprite.prototype.move = function(x, y, width, height) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this._width = width || 0;
-    this._height = height || 0;
+TilingSprite.prototype.move = function (x, y, width, height) {
+  this.x = x || 0;
+  this.y = y || 0;
+  this._width = width || 0;
+  this._height = height || 0;
 };
 
 /**
@@ -111,48 +112,45 @@ TilingSprite.prototype.move = function(x, y, width, height) {
  * @param {Number} width The width of the frame
  * @param {Number} height The height of the frame
  */
-TilingSprite.prototype.setFrame = function(x, y, width, height) {
-    this._frame.x = x;
-    this._frame.y = y;
-    this._frame.width = width;
-    this._frame.height = height;
-    this._refresh();
+TilingSprite.prototype.setFrame = function (x, y, width, height) {
+  this._frame.x = x;
+  this._frame.y = y;
+  this._frame.width = width;
+  this._frame.height = height;
+  this._refresh();
 };
 
 /**
  * @method updateTransform
  * @private
  */
-TilingSprite.prototype.updateTransform = function() {
-    this.tilePosition.x = Math.round(-this.origin.x);
-    this.tilePosition.y = Math.round(-this.origin.y);
-    this.updateTransformTS();
+TilingSprite.prototype.updateTransform = function () {
+  this.tilePosition.x = Math.round(-this.origin.x);
+  this.tilePosition.y = Math.round(-this.origin.y);
 };
-
-TilingSprite.prototype.updateTransformTS = PIXI.TilingSprite.prototype.updateTransform;
 
 /**
  * @method _onBitmapLoad
  * @private
  */
-TilingSprite.prototype._onBitmapLoad = function() {
-    this.texture.baseTexture = this._bitmap.baseTexture;
-    this._refresh();
+TilingSprite.prototype._onBitmapLoad = function () {
+  this.texture.baseTexture = this._bitmap.baseTexture;
+  this._refresh();
 };
 
 /**
  * @method _refresh
  * @private
  */
-TilingSprite.prototype._refresh = function() {
-    var frame = this._frame.clone();
-    if (frame.width === 0 && frame.height === 0 && this._bitmap) {
-        frame.width = this._bitmap.width;
-        frame.height = this._bitmap.height;
-    }
-    this.texture.frame = frame;
-    this.texture._updateID++;
-    this.tilingTexture = null;
+TilingSprite.prototype._refresh = function () {
+  var frame = this._frame.clone();
+  if (frame.width === 0 && frame.height === 0 && this._bitmap) {
+    frame.width = this._bitmap.width;
+    frame.height = this._bitmap.height;
+  }
+  this.texture.frame = frame;
+  this.texture._updateID++;
+  this.tilingTexture = null;
 };
 
 // The important members from Pixi.js

@@ -5,7 +5,7 @@
  * @class Utils
  */
 function Utils() {
-    throw new Error('This is a static class');
+  throw new Error("This is a static class");
 }
 
 /**
@@ -16,7 +16,7 @@ function Utils() {
  * @type String
  * @final
  */
-Utils.RPGMAKER_NAME = 'MV';
+Utils.RPGMAKER_NAME = "MV";
 
 /**
  * The version of the RPG Maker.
@@ -26,9 +26,9 @@ Utils.RPGMAKER_NAME = 'MV';
  * @type String
  * @final
  */
-Utils.RPGMAKER_VERSION = "1.6.1";
+Utils.RPGMAKER_VERSION = "2.0.0";
 
-Utils.RPGMAKER_ENGINE = "community-1.3b";
+Utils.RPGMAKER_ENGINE = "Pixi v7";
 
 /**
  * Checks whether the option is in the query string.
@@ -38,17 +38,24 @@ Utils.RPGMAKER_ENGINE = "community-1.3b";
  * @param {String} name The option name
  * @return {Boolean} True if the option is in the query string
  */
-Utils.isOptionValid = function(name) {
-    if (location.search.slice(1).split('&').contains(name)) {
-        return true;
+Utils.isOptionValid = function (name) {
+  if (location.search.slice(1).split("&").contains(name)) {
+    return 1;
+  }
+  if (this.isElectron()) {
+    if (process.argv.length > 0 && process.argv[0].split("&").contains(name)) {
+      return 1;
     }
-    if (typeof nw !== "undefined" &&
-        nw.App.argv.length > 0 &&
-        nw.App.argv[0].split('&').contains(name)
+  } else if (this.isNwjs()) {
+    if (
+      typeof nw !== "undefined" &&
+      nw.App.argv.length > 0 &&
+      nw.App.argv[0].split("&").contains(name)
     ) {
-        return true;
+      return 1;
     }
-    return false;
+  }
+  return 0;
 };
 
 /**
@@ -58,8 +65,46 @@ Utils.isOptionValid = function(name) {
  * @method isNwjs
  * @return {Boolean} True if the platform is NW.js
  */
-Utils.isNwjs = function() {
-    return typeof require === 'function' && typeof process === 'object';
+Utils.isNwjs = function () {
+  return typeof require === "function" && typeof process === "object";
+};
+
+/**
+ * Checks whether the platform is Electron
+ *
+ * @static
+ * @method isElectron
+ * @return {Boolean} True if the platform is Electron
+ */
+Utils.isElectron = function () {
+  return (
+    window &&
+    window.process &&
+    window.process.versions &&
+    window.process.versions["electron"]
+  );
+};
+
+/**
+ * Checks whether the platform is Tauri
+ *
+ * @static
+ * @method isTauri
+ * @return {Boolean} True if the platform is Tauri
+ */
+Utils.isTauri = function () {
+  return typeof window !== "undefined" && window.__TAURI__;
+};
+
+/**
+ * Checks whether the platform is Desktop (NW.js, Electron, or Tauri).
+ *
+ * @static
+ * @method isDesktop
+ * @return {Boolean} True if the platform is a desktop app
+ */
+Utils.isDesktop = function () {
+  return this.isNwjs() || this.isElectron() || this.isTauri();
 };
 
 /**
@@ -69,9 +114,9 @@ Utils.isNwjs = function() {
  * @method isMobileDevice
  * @return {Boolean} True if the platform is a mobile device
  */
-Utils.isMobileDevice = function() {
-    var r = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return !!navigator.userAgent.match(r);
+Utils.isMobileDevice = function () {
+  var r = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return !!navigator.userAgent.match(r);
 };
 
 /**
@@ -81,10 +126,13 @@ Utils.isMobileDevice = function() {
  * @method isMobileSafari
  * @return {Boolean} True if the browser is Mobile Safari
  */
-Utils.isMobileSafari = function() {
-    var agent = navigator.userAgent;
-    return !!(agent.match(/iPhone|iPad|iPod/) && agent.match(/AppleWebKit/) &&
-              !agent.match('CriOS'));
+Utils.isMobileSafari = function () {
+  var agent = navigator.userAgent;
+  return !!(
+    agent.match(/iPhone|iPad|iPod/) &&
+    agent.match(/AppleWebKit/) &&
+    !agent.match("CriOS")
+  );
 };
 
 /**
@@ -94,9 +142,9 @@ Utils.isMobileSafari = function() {
  * @method isAndroidChrome
  * @return {Boolean} True if the browser is Android Chrome
  */
-Utils.isAndroidChrome = function() {
-    var agent = navigator.userAgent;
-    return !!(agent.match(/Android/) && agent.match(/Chrome/));
+Utils.isAndroidChrome = function () {
+  var agent = navigator.userAgent;
+  return !!(agent.match(/Android/) && agent.match(/Chrome/));
 };
 
 /**
@@ -106,18 +154,18 @@ Utils.isAndroidChrome = function() {
  * @method canReadGameFiles
  * @return {Boolean} True if the browser can read files in the game folder
  */
-Utils.canReadGameFiles = function() {
-    var scripts = document.getElementsByTagName('script');
-    var lastScript = scripts[scripts.length - 1];
-    var xhr = new XMLHttpRequest();
-    try {
-        xhr.open('GET', lastScript.src);
-        xhr.overrideMimeType('text/javascript');
-        xhr.send();
-        return true;
-    } catch (e) {
-        return false;
-    }
+Utils.canReadGameFiles = function () {
+  var scripts = document.getElementsByTagName("script");
+  var lastScript = scripts[scripts.length - 1];
+  var xhr = new XMLHttpRequest();
+  try {
+    xhr.open("GET", lastScript.src);
+    xhr.overrideMimeType("text/javascript");
+    xhr.send();
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
 /**
@@ -130,37 +178,39 @@ Utils.canReadGameFiles = function() {
  * @param {Number} b The blue value in the range (0, 255)
  * @return {String} CSS color string
  */
-Utils.rgbToCssColor = function(r, g, b) {
-    r = Math.round(r);
-    g = Math.round(g);
-    b = Math.round(b);
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
+Utils.rgbToCssColor = function (r, g, b) {
+  r = Math.round(r);
+  g = Math.round(g);
+  b = Math.round(b);
+  return "rgb(" + r + "," + g + "," + b + ")";
 };
 
 Utils._id = 1;
-Utils.generateRuntimeId = function(){
-    return Utils._id++;
+Utils.generateRuntimeId = function () {
+  return Utils._id++;
 };
 
 Utils._supportPassiveEvent = null;
 /**
  * Test this browser support passive event feature
- * 
+ *
  * @static
  * @method isSupportPassiveEvent
  * @return {Boolean} this browser support passive event or not
  */
-Utils.isSupportPassiveEvent = function() {
-    if (typeof Utils._supportPassiveEvent === "boolean") {
-        return Utils._supportPassiveEvent;
-    }
-    // test support passive event
-    // https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md#feature-detection
-    var passive = false;
-    var options = Object.defineProperty({}, "passive", {
-        get: function() { passive = true; }
-    });
-    window.addEventListener("test", null, options);
-    Utils._supportPassiveEvent = passive;
-    return passive;
-}
+Utils.isSupportPassiveEvent = function () {
+  if (typeof Utils._supportPassiveEvent === "boolean") {
+    return Utils._supportPassiveEvent;
+  }
+  // test support passive event
+  // https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md#feature-detection
+  var passive = false;
+  var options = Object.defineProperty({}, "passive", {
+    get: function () {
+      passive = true;
+    },
+  });
+  window.addEventListener("test", null, options);
+  Utils._supportPassiveEvent = passive;
+  return passive;
+};

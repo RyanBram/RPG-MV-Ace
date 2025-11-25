@@ -8,14 +8,15 @@
  * @param {Number} y The y coordinate
  */
 function Point() {
-    this.initialize.apply(this, arguments);
+  this.initialize.apply(this, arguments);
 }
 
 Point.prototype = Object.create(PIXI.Point.prototype);
 Point.prototype.constructor = Point;
 
-Point.prototype.initialize = function(x, y) {
-    PIXI.Point.call(this, x, y);
+Point.prototype.initialize = function (x, y) {
+  var baseInstance = new PIXI.Point(x, y);
+  Object.assign(this, baseInstance);
 };
 
 /**

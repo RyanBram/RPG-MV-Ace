@@ -6,17 +6,18 @@
  * @constructor
  */
 function Stage() {
-    this.initialize.apply(this, arguments);
+  this.initialize.apply(this, arguments);
 }
 
 Stage.prototype = Object.create(PIXI.Container.prototype);
 Stage.prototype.constructor = Stage;
 
-Stage.prototype.initialize = function() {
-    PIXI.Container.call(this);
+Stage.prototype.initialize = function () {
+  var baseInstance = new PIXI.Container();
+  Object.assign(this, baseInstance);
 
-    // The interactive flag causes a memory leak.
-    this.interactive = false;
+  // The interactive flag causes a memory leak.
+  this.interactive = false;
 };
 
 /**

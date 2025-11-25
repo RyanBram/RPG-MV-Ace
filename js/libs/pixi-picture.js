@@ -1,23 +1,24 @@
 /*!
- * @pixi/picture - v4.0.0
- * Compiled Tue, 25 Apr 2023 17:44:32 UTC
+ * @pixi/picture - v4.1.1
+ * Compiled Wed, 04 Jun 2025 15:23:12 UTC
  *
  * @pixi/picture is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  *
- * Copyright 2023, Ivan Popelyshev, All Rights Reserved
+ * Copyright 2025, Ivan Popelyshev, All Rights Reserved
  */ ((this.PIXI = this.PIXI || {}),
-  (this.PIXI.picture = (function (u, a) {
+  (this.PIXI.picture = (function (u, i, re, ne, I) {
     "use strict";
-    class M extends a.Filter {
+    class w extends i.Filter {
       constructor() {
         (super(...arguments),
           (this.backdropUniformName = null),
+          (this.trivial = !1),
           (this._backdropActive = !1),
           (this.clearColor = null));
       }
     }
-    const z = `
+    const ie = `
 varying vec2 vTextureCoord;
 
 uniform sampler2D uSampler;
@@ -37,16 +38,16 @@ void main(void)
 
    gl_FragColor = b_res;
 }`;
-    class E extends M {
+    class N extends w {
       constructor(e) {
-        let i = z;
-        ((i = i.replace("%UNIFORM_CODE%", e.uniformCode || "")),
-          (i = i.replace("%BLEND_CODE%", e.blendCode || "")),
-          super(void 0, i, e.uniforms),
+        let r = ie;
+        ((r = r.replace("%UNIFORM_CODE%", e.uniformCode || "")),
+          (r = r.replace("%BLEND_CODE%", e.blendCode || "")),
+          super(void 0, r, e.uniforms),
           (this.backdropUniformName = "uBackdrop"));
       }
     }
-    const W = `
+    const le = `
 attribute vec2 aVertexPosition;
 
 uniform mat3 projectionMatrix;
@@ -77,72 +78,72 @@ void main(void)
 }
 
 `;
-    class A extends a.Filter {
-      constructor(e, i) {
-        const s = i || {};
-        (s.flipY || (s.flipY = new Float32Array([0, 1])), super(W, e, s));
+    class U extends i.Filter {
+      constructor(e, r) {
+        const a = r || {};
+        (a.flipY || (a.flipY = new Float32Array([0, 1])), super(le, e, a));
       }
     }
-    var S = ((r) => (
-      (r[(r.RED = 0)] = "RED"),
-      (r[(r.GREEN = 1)] = "GREEN"),
-      (r[(r.BLUE = 2)] = "BLUE"),
-      (r[(r.ALPHA = 3)] = "ALPHA"),
-      r
-    ))(S || {});
-    class N {
-      constructor(e = !1, i = 3) {
+    var H = ((t) => (
+      (t[(t.RED = 0)] = "RED"),
+      (t[(t.GREEN = 1)] = "GREEN"),
+      (t[(t.BLUE = 2)] = "BLUE"),
+      (t[(t.ALPHA = 3)] = "ALPHA"),
+      t
+    ))(H || {});
+    class V {
+      constructor(e = !1, r = 3) {
         ((this.maskBefore = e),
           (this.uniformCode = "uniform vec4 uChannel;"),
           (this.uniforms = { uChannel: new Float32Array([0, 0, 0, 0]) }),
           (this.blendCode = "b_res = dot(b_src, uChannel) * b_dest;"),
           (this.safeFlipY = !1),
-          (this.uniforms.uChannel[i] = 1));
+          (this.uniforms.uChannel[r] = 1));
       }
     }
-    const X = new Float32Array([0, 1]),
-      g = class extends E {
-        constructor(e, i = new N()) {
-          (super(i),
-            (this.baseFilter = e),
-            (this.config = i),
-            (this.padding = e.padding),
-            (this.safeFlipY = i.safeFlipY));
+    const ae = new Float32Array([0, 1]),
+      T = class extends N {
+        constructor(t, e = new V()) {
+          (super(e),
+            (this.baseFilter = t),
+            (this.config = e),
+            (this.padding = t.padding),
+            (this.safeFlipY = e.safeFlipY));
         }
-        apply(e, i, s, n) {
-          const t = e.getFilterTexture(i);
+        apply(t, e, r, a) {
+          const s = t.getFilterTexture(e);
           if (this.config.maskBefore) {
             const { blendMode: o } = this.state;
-            ((this.state.blendMode = a.BLEND_MODES.NONE),
-              e.applyFilter(this, i, t, a.CLEAR_MODES.YES),
+            ((this.state.blendMode = i.BLEND_MODES.NONE),
+              t.applyFilter(this, e, s, i.CLEAR_MODES.YES),
               (this.baseFilter.blendMode = o),
-              this.baseFilter.apply(e, t, s, n),
+              this.baseFilter.apply(t, s, r, a),
               (this.state.blendMode = o));
           } else {
-            const { uBackdrop: o, uBackdrop_flipY: h } = this.uniforms;
-            if (h[1] > 0 || this.safeFlipY)
-              this.baseFilter.apply(e, o, t, a.CLEAR_MODES.YES);
+            const { uBackdrop: o, uBackdrop_flipY: b } = this.uniforms;
+            if (b[1] > 0 || this.safeFlipY)
+              this.baseFilter.apply(t, o, s, i.CLEAR_MODES.YES);
             else {
-              const f = e.getFilterTexture(i);
-              (g._flipYFilter || (g._flipYFilter = new A()),
-                (g._flipYFilter.uniforms.flipY[0] = h[0]),
-                (g._flipYFilter.uniforms.flipY[1] = h[1]),
-                g._flipYFilter.apply(e, o, f, a.CLEAR_MODES.YES),
-                this.baseFilter.apply(e, f, t, a.CLEAR_MODES.YES),
-                e.returnFilterTexture(f),
-                (this.uniforms.uBackdrop_flipY = X));
+              const _ = t.getFilterTexture(e);
+              (T._flipYFilter || (T._flipYFilter = new U()),
+                (T._flipYFilter.uniforms.flipY[0] = b[0]),
+                (T._flipYFilter.uniforms.flipY[1] = b[1]),
+                T._flipYFilter.apply(t, o, _, i.CLEAR_MODES.YES),
+                this.baseFilter.apply(t, _, s, i.CLEAR_MODES.YES),
+                t.returnFilterTexture(_),
+                (this.uniforms.uBackdrop_flipY = ae));
             }
-            ((this.uniforms.uBackdrop = t),
-              e.applyFilter(this, i, s, n),
+            ((this.uniforms.uBackdrop = s),
+              t.applyFilter(this, e, r, a),
               (this.uniforms.uBackdrop = o),
-              (this.uniforms.uBackdrop_flipY = h));
+              (this.uniforms.uBackdrop_flipY = b));
           }
-          e.returnFilterTexture(t);
+          t.returnFilterTexture(s);
         }
       };
-    let x = g;
-    x._flipYFilter = null;
-    const C = `if (b_src.a == 0.0) {
+    let G = T;
+    G._flipYFilter = null;
+    const g = `if (b_src.a == 0.0) {
   gl_FragColor = vec4(0, 0, 0, 0);
   return;
 }
@@ -150,409 +151,490 @@ if (b_dest.a == 0.0) {
   gl_FragColor = b_src;
   return;
 }
-vec3 Cb = b_dest.rgb / b_dest.a;
-vec3 Cs = b_src.rgb / b_src.a;
+vec3 base = b_dest.rgb / b_dest.a;
+vec3 blend = b_src.rgb / b_src.a;
 %NPM_BLEND%
 // SWAP SRC WITH NPM BLEND
-vec3 new_src = (1.0 - b_dest.a) * Cs + b_dest.a * B;
+vec3 new_src = (1.0 - b_dest.a) * blend + b_dest.a * B;
 // PORTER DUFF PMA COMPOSITION MODE
 b_res.a = b_src.a + b_dest.a * (1.0-b_src.a);
 b_res.rgb = b_src.a * new_src + (1.0 - b_src.a) * b_dest.rgb;
 `,
-      R = `vec3 multiply = Cb * Cs * 2.0;
-vec3 Cb2 = Cb * 2.0 - 1.0;
-vec3 screen = Cb2 + Cs - Cb2 * Cs;
-vec3 B;
-if (Cb.r <= 0.5) {
-  B.r = multiply.r;
-} else {
-  B.r = screen.r;
+      j = { blendCode: g, npmBlendCode: "vec3 B = blend * base;" },
+      X = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendOverlay(base, blend);",
+        uniformCode: `
+float finalBlendOverlay(float base, float blend) 
+{
+    return mix((1.0-2.0*(1.0-base)*(1.0-blend)), (2.0*base*blend), step(base, 0.5));
 }
-if (Cb.g <= 0.5) {
-  B.g = multiply.g;
-} else {
-  B.g = screen.g;
-}
-if (Cb.b <= 0.5) {
-  B.b = multiply.b;
-} else {
-  B.b = screen.b;
+
+vec3 blendOverlay(vec3 base, vec3 blend) 
+{
+    return vec3(
+        finalBlendOverlay(base.r,blend.r),
+        finalBlendOverlay(base.g,blend.g),
+        finalBlendOverlay(base.b,blend.b)
+    );
 }
 `,
-      P = `vec3 multiply = Cb * Cs * 2.0;
-vec3 Cs2 = Cs * 2.0 - 1.0;
-vec3 screen = Cb + Cs2 - Cb * Cs2;
-vec3 B;
-if (Cs.r <= 0.5) {
-  B.r = multiply.r;
-} else {
-  B.r = screen.r;
-}
-if (Cs.g <= 0.5) {
-  B.g = multiply.g;
-} else {
-  B.g = screen.g;
-}
-if (Cs.b <= 0.5) {
-  B.b = multiply.b;
-} else {
-  B.b = screen.b;
-}
-`,
-      Y = `vec3 first = Cb - (1.0 - 2.0 * Cs) * Cb * (1.0 - Cb);
-vec3 B;
-vec3 D;
-if (Cs.r <= 0.5)
+      },
+      W = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendHardLightVec3(base, blend);",
+        uniformCode: `
+float blendHardLight(float base, float blend)
 {
-  B.r = first.r;
+    return mix((1.0-2.0*(1.0-base)*(1.0-blend)), 2.0*base*blend, 1.0 - step(blend, 0.5));
 }
-else
+
+vec3 blendHardLightVec3(vec3 base, vec3 blend) 
 {
-  if (Cb.r <= 0.25)
-  {
-    D.r = ((16.0 * Cb.r - 12.0) * Cb.r + 4.0) * Cb.r;    
-  }
-  else
-  {
-    D.r = sqrt(Cb.r);
-  }
-  B.r = Cb.r + (2.0 * Cs.r - 1.0) * (D.r - Cb.r);
-}
-if (Cs.g <= 0.5)
+    return vec3(blendHardLight(base.r,blend.r),blendHardLight(base.g,blend.g),blendHardLight(base.b,blend.b));
+}`,
+      },
+      z = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendSoftLightVec3(blend, base);",
+        uniformCode: `
+float blendSoftLight(float base, float blend)
 {
-  B.g = first.g;
-}
-else
-{
-  if (Cb.g <= 0.25)
-  {
-    D.g = ((16.0 * Cb.g - 12.0) * Cb.g + 4.0) * Cb.g;    
-  }
-  else
-  {
-    D.g = sqrt(Cb.g);
-  }
-  B.g = Cb.g + (2.0 * Cs.g - 1.0) * (D.g - Cb.g);
-}
-if (Cs.b <= 0.5)
-{
-  B.b = first.b;
-}
-else
-{
-  if (Cb.b <= 0.25)
-  {
-    D.b = ((16.0 * Cb.b - 12.0) * Cb.b + 4.0) * Cb.b;    
-  }
-  else
-  {
-    D.b = sqrt(Cb.b);
-  }
-  B.b = Cb.b + (2.0 * Cs.b - 1.0) * (D.b - Cb.b);
-}
-`,
-      O = `vec3 B = Cs * Cb;
-`,
-      k = C.replace("%NPM_BLEND%", R),
-      w = C.replace("%NPM_BLEND%", P),
-      I = C.replace("%NPM_BLEND%", Y),
-      U = C.replace("%NPM_BLEND%", O),
-      F = [];
-    ((F[a.BLEND_MODES.MULTIPLY] = U),
-      (F[a.BLEND_MODES.OVERLAY] = k),
-      (F[a.BLEND_MODES.HARD_LIGHT] = w),
-      (F[a.BLEND_MODES.SOFT_LIGHT] = I));
-    const B = [],
-      v = [];
-    function H(r) {
-      return F[r] ? (B[r] || (B[r] = new E({ blendCode: F[r] })), B[r]) : null;
+    if(blend < 0.5)
+    {
+        return 2.0*base*blend+base*base*(1.0-2.0*blend);
     }
-    function D(r) {
-      return F[r] ? (v[r] || (v[r] = [H(r)]), v[r]) : null;
+    else
+    {
+        return sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend);
     }
-    class $ extends a.Sprite {
+}
+
+vec3 blendSoftLightVec3(vec3 base, vec3 blend)
+{
+    return vec3(blendSoftLight(base.r,blend.r),blendSoftLight(base.g,blend.g),blendSoftLight(base.b,blend.b));
+}
+`,
+      },
+      K = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendDarkenVec3(blend, base);",
+        uniformCode: `
+float blendDarken(float base, float blend)
+{
+    return min(blend,base);
+}
+
+vec3 blendDarkenVec3(vec3 base, vec3 blend)
+{
+    return vec3(blendDarken(base.r,blend.r),blendDarken(base.g,blend.g),blendDarken(base.b,blend.b));
+}
+`,
+      },
+      $ = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendLightenVec3(blend, base);",
+        uniformCode: `
+float blendLighten(float base, float blend)
+{
+    return max(blend,base);
+}
+
+vec3 blendLightenVec3(vec3 base, vec3 blend)
+{
+    return vec3(blendLighten(base.r,blend.r),blendLighten(base.g,blend.g),blendLighten(base.b,blend.b));
+}
+`,
+      },
+      q = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendColorDodge(blend, base);",
+        uniformCode: `
+float blendColorDodge(float base, float blend) {
+    return (blend==1.0)?blend:min(base/(1.0-blend),1.0);
+}
+
+vec3 blendColorDodge(vec3 base, vec3 blend) {
+    return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b));
+}
+`,
+      },
+      J = {
+        blendCode: g,
+        npmBlendCode: "vec3 B = blendColorBurn(blend, base);",
+        uniformCode: `
+float colorBurn(float base, float blend)
+{
+    return max((1.0-((1.0-base)/blend)),0.0);
+}
+
+vec3 blendColorBurn(vec3 base, vec3 blend)
+{
+    return vec3(colorBurn(base.r,blend.r),colorBurn(base.g,blend.g),colorBurn(base.b,blend.b));
+}
+`,
+      },
+      f = [];
+    ((f[i.BLEND_MODES.MULTIPLY] = j),
+      (f[i.BLEND_MODES.OVERLAY] = X),
+      (f[i.BLEND_MODES.HARD_LIGHT] = W),
+      (f[i.BLEND_MODES.SOFT_LIGHT] = z),
+      (f[i.BLEND_MODES.DARKEN] = K),
+      (f[i.BLEND_MODES.LIGHTEN] = $),
+      (f[i.BLEND_MODES.COLOR_DODGE] = q),
+      (f[i.BLEND_MODES.COLOR_BURN] = J));
+    for (const t in f) {
+      const e = f[t];
+      e.npmBlendCode &&
+        (e.blendCode = e.blendCode.replace("%NPM_BLEND%", e.npmBlendCode));
+    }
+    const C = [],
+      R = [],
+      p = new Array(32);
+    ((p[i.BLEND_MODES.NORMAL] = !0),
+      (p[i.BLEND_MODES.ADD] = !0),
+      (p[i.BLEND_MODES.SCREEN] = !0),
+      (p[i.BLEND_MODES.DST_OUT] = !0),
+      (p[i.BLEND_MODES.DST_IN] = !0),
+      (p[i.BLEND_MODES.DST_OVER] = !0),
+      (p[i.BLEND_MODES.DST_ATOP] = !0),
+      (p[i.BLEND_MODES.SRC_OUT] = !0),
+      (p[i.BLEND_MODES.SRC_IN] = !0),
+      (p[i.BLEND_MODES.SRC_OVER] = !0),
+      (p[i.BLEND_MODES.SRC_ATOP] = !0),
+      (p[i.BLEND_MODES.SRC_OUT] = !0),
+      (p[i.BLEND_MODES.SRC_IN] = !0),
+      (p[i.BLEND_MODES.SRC_OVER] = !0),
+      (p[i.BLEND_MODES.XOR] = !0),
+      (p[i.BLEND_MODES.SUBTRACT] = !0));
+    function Q(t) {
+      const e = p[t];
+      return !e && !f[t]
+        ? null
+        : (C[t] ||
+            (e
+              ? ((C[t] = new i.Filter()),
+                (C[t].blendMode = t),
+                (C[t].trivial = !0))
+              : (C[t] = new N(f[t]))),
+          C[t]);
+    }
+    function y(t) {
+      return f[t] ? (R[t] || (R[t] = [Q(t)]), R[t]) : null;
+    }
+    class se extends re.Sprite {
       _render(e) {
-        const i = this._texture;
-        if (!i || !i.valid) return;
-        const s = D(this.blendMode),
-          n = this.blendMode;
-        if (s) {
-          if ((e.batch.flush(), !e.filter.pushWithCheck(this, s))) return;
-          this.blendMode = a.BLEND_MODES.NORMAL;
+        const r = this._texture;
+        if (!r || !r.valid) return;
+        const a = y(this.blendMode),
+          s = this.blendMode;
+        if (a) {
+          if ((e.batch.flush(), !e.filter.pushWithCheck(this, a))) return;
+          this.blendMode = i.BLEND_MODES.NORMAL;
         }
         (this.calculateVertices(),
           e.batch.setObjectRenderer(e.plugins[this.pluginName]),
           e.plugins[this.pluginName].render(this),
-          s && (e.batch.flush(), e.filter.pop(), (this.blendMode = n)));
+          a && (e.batch.flush(), e.filter.pop(), (this.blendMode = s)));
       }
     }
-    class q extends a.TilingSprite {
+    class oe extends ne.TilingSprite {
       _render(e) {
-        const i = this._texture;
-        if (!i || !i.valid) return;
-        const s = D(this.blendMode);
-        (s && (e.batch.flush(), !e.filter.pushWithCheck(this, s))) ||
+        const r = this._texture;
+        if (!r || !r.valid) return;
+        const a = y(this.blendMode);
+        (a && (e.batch.flush(), !e.filter.pushWithCheck(this, a))) ||
           (this.tileTransform.updateLocalTransform(),
           this.uvMatrix.update(),
           e.batch.setObjectRenderer(e.plugins[this.pluginName]),
           e.plugins[this.pluginName].render(this),
-          s && (e.batch.flush(), e.filter.pop()));
+          a && (e.batch.flush(), e.filter.pop()));
       }
     }
-    class K {
-      constructor() {
-        ((this.renderTexture = null),
-          (this.target = null),
-          (this.legacy = !1),
-          (this.resolution = 1),
-          (this.sourceFrame = new a.Rectangle()),
-          (this.destinationFrame = new a.Rectangle()),
-          (this.filters = []));
-      }
-      clear() {
-        ((this.target = null),
-          (this.filters = null),
-          (this.renderTexture = null));
-      }
-    }
-    function J(r, e) {
-      const i = e.x + e.width,
-        s = e.y + e.height,
-        n = r.x + r.width,
-        t = r.y + r.height;
+    function de(t, e) {
+      const r = e.x + e.width,
+        a = e.y + e.height,
+        s = t.x + t.width,
+        o = t.y + t.height;
       return (
-        e.x >= r.x &&
-        e.x <= n &&
-        e.y >= r.y &&
-        e.y <= t &&
-        i >= r.x &&
-        i <= n &&
-        s >= r.y &&
-        s <= t
+        e.x >= t.x &&
+        e.x <= s &&
+        e.y >= t.y &&
+        e.y <= o &&
+        r >= t.x &&
+        r <= s &&
+        a >= t.y &&
+        a <= o
       );
     }
-    function Q(r, e = 0) {
-      const i = this,
-        { gl: s } = i;
+    function ue(t, e = 0) {
+      const { gl: r } = this;
       (this.currentLocation !== e &&
-        ((i.currentLocation = e), s.activeTexture(s.TEXTURE0 + e)),
-        this.bind(r, e));
+        ((this.currentLocation = e), r.activeTexture(r.TEXTURE0 + e)),
+        this.bind(t, e));
     }
-    function Z(r, e, i = !0) {
-      const s = this.renderer,
-        n = this.defaultFilterStack,
-        t = this.statePool.pop() || new K();
-      let o = e[0].resolution,
-        h = e[0].padding,
-        f = e[0].autoFit,
-        l = e[0].legacy;
-      for (let c = 1; c < e.length; c++) {
-        const m = e[c];
-        ((o = Math.min(o, m.resolution)),
-          (h = this.useMaxPadding ? Math.max(h, m.padding) : h + m.padding),
-          (f = f && m.autoFit),
-          (l = l || m.legacy));
+    const be = new I.Matrix();
+    function ce(t, e, r = !0) {
+      var a, s, o, b, _;
+      const d = this.renderer,
+        E = this.defaultFilterStack,
+        n = this.statePool.pop() || new i.FilterState(),
+        l = d.renderTexture;
+      let c, h;
+      if (l.current) {
+        const m = l.current;
+        ((c = m.resolution), (h = m.multisample));
+      } else ((c = d.resolution), (h = d.multisample));
+      let D = e[0].resolution || c,
+        A = (a = e[0].multisample) != null ? a : h,
+        S = e[0].padding,
+        P = e[0].autoFit,
+        k = (s = e[0].legacy) != null ? s : !0;
+      for (let m = 1; m < e.length; m++) {
+        const F = e[m];
+        ((D = Math.min(D, F.resolution || c)),
+          (A = Math.min(A, (o = F.multisample) != null ? o : h)),
+          (S = this.useMaxPadding ? Math.max(S, F.padding) : S + F.padding),
+          (P = P && F.autoFit),
+          (k = k || ((b = F.legacy) != null ? b : !0)));
       }
-      (n.length === 1 &&
-        (this.defaultFilterStack[0].renderTexture = s.renderTexture.current),
-        n.push(t),
-        (t.resolution = o),
-        (t.legacy = l),
-        (t.target = r),
-        t.sourceFrame.copyFrom(r.filterArea || r.getBounds(!0)),
-        t.sourceFrame.pad(h));
-      let d = !0;
+      (E.length === 1 && (this.defaultFilterStack[0].renderTexture = l.current),
+        E.push(n),
+        (n.resolution = D),
+        (n.legacy = k),
+        (n.target = t),
+        n.sourceFrame.copyFrom(t.filterArea || t.getBounds(!0)),
+        n.sourceFrame.pad(S));
+      let te = !0;
+      const Y = this.tempRect.copyFrom(l.sourceFrame);
       if (
-        (f
-          ? t.sourceFrame.fit(this.renderer.renderTexture.sourceFrame)
-          : (d = J(this.renderer.renderTexture.sourceFrame, t.sourceFrame)),
-        i && t.sourceFrame.width <= 1 && t.sourceFrame.height <= 1)
+        (d.projection.transform &&
+          ((_ = this.transformAABB) == null ||
+            _.call(this, be.copyFrom(d.projection.transform).invert(), Y)),
+        P
+          ? (n.sourceFrame.fit(Y),
+            (n.sourceFrame.width <= 0 || n.sourceFrame.height <= 0) &&
+              ((n.sourceFrame.width = 0), (n.sourceFrame.height = 0)))
+          : ((te = de(this.renderer.renderTexture.sourceFrame, n.sourceFrame)),
+            n.sourceFrame.intersects(Y) ||
+              ((n.sourceFrame.width = 0), (n.sourceFrame.height = 0))),
+        this.roundFrame(
+          n.sourceFrame,
+          l.current ? l.current.resolution : d.resolution,
+          l.sourceFrame,
+          l.destinationFrame,
+          d.projection.transform,
+        ),
+        r && n.sourceFrame.width <= 1 && n.sourceFrame.height <= 1)
       )
-        return (n.pop(), t.clear(), this.statePool.push(t), !1);
-      if ((t.sourceFrame.ceil(o), d)) {
-        let c = null,
-          m = null;
-        for (let T = 0; T < e.length; T++) {
-          const L = e[T].backdropUniformName;
-          if (L) {
-            const { uniforms: _ } = e[T];
-            _[`${L}_flipY`] || (_[`${L}_flipY`] = new Float32Array([0, 1]));
-            const y = _[`${L}_flipY`];
-            (c === null
-              ? ((c = this.prepareBackdrop(t.sourceFrame, y)), (m = y))
-              : ((y[0] = m[0]), (y[1] = m[1])),
-              (_[L] = c),
-              c && (e[T]._backdropActive = !0));
+        return (E.pop(), n.clear(), this.statePool.push(n), !1);
+      if (te) {
+        let m = null,
+          F = null;
+        for (let v = 0; v < e.length; v++) {
+          const O = e[v].backdropUniformName;
+          if (O) {
+            const { uniforms: M } = e[v];
+            M[`${O}_flipY`] || (M[`${O}_flipY`] = new Float32Array([0, 1]));
+            const x = M[`${O}_flipY`];
+            (m === null
+              ? ((m = this.prepareBackdrop(n.sourceFrame, x)), (F = x))
+              : ((x[0] = F[0]), (x[1] = F[1])),
+              (M[O] = m),
+              m && (e[v]._backdropActive = !0));
           }
         }
-        c && (o = t.resolution = c.resolution);
+        m && (D = n.resolution = m.resolution);
       }
-      ((t.renderTexture = this.getOptimalFilterTexture(
-        t.sourceFrame.width,
-        t.sourceFrame.height,
-        o,
+      ((n.renderTexture = this.getOptimalFilterTexture(
+        n.sourceFrame.width,
+        n.sourceFrame.height,
+        D,
+        A,
       )),
-        (t.filters = e),
-        (t.destinationFrame.width = t.renderTexture.width),
-        (t.destinationFrame.height = t.renderTexture.height));
-      const p = this.tempRect;
-      ((p.width = t.sourceFrame.width),
-        (p.height = t.sourceFrame.height),
-        (t.renderTexture.filterFrame = t.sourceFrame),
-        s.renderTexture.bind(t.renderTexture, t.sourceFrame, p),
-        s.renderTexture.clear());
-      const b = e[e.length - 1].clearColor;
+        (n.filters = e),
+        (n.destinationFrame.width = n.renderTexture.width),
+        (n.destinationFrame.height = n.renderTexture.height));
+      const B = this.tempRect;
+      ((B.x = 0),
+        (B.y = 0),
+        (B.width = n.sourceFrame.width),
+        (B.height = n.sourceFrame.height),
+        (n.renderTexture.filterFrame = n.sourceFrame),
+        n.bindingSourceFrame.copyFrom(l.sourceFrame),
+        n.bindingDestinationFrame.copyFrom(l.destinationFrame),
+        (n.transform = d.projection.transform),
+        (d.projection.transform = null),
+        l.bind(n.renderTexture, n.sourceFrame, B));
+      const L = e[e.length - 1].clearColor;
       return (
-        b
-          ? s.framebuffer.clear(b[0], b[1], b[2], b[3])
-          : s.framebuffer.clear(0, 0, 0, 0),
+        L
+          ? d.framebuffer.clear(L[0], L[1], L[2], L[3])
+          : d.framebuffer.clear(0, 0, 0, 0),
         !0
       );
     }
-    function j(r, e) {
-      return this.pushWithCheck(r, e, !1);
+    function he(t, e) {
+      return this.pushWithCheck(t, e, !1);
     }
-    function ee() {
-      const r = this.defaultFilterStack,
-        e = r.pop(),
-        i = e.filters;
+    function pe() {
+      const t = this.defaultFilterStack,
+        e = t.pop(),
+        r = e.filters;
       this.activeState = e;
-      const s = this.globalUniforms.uniforms;
-      ((s.outputFrame = e.sourceFrame), (s.resolution = e.resolution));
-      const n = s.inputSize,
-        t = s.inputPixel,
-        o = s.inputClamp;
+      const a = this.globalUniforms.uniforms;
+      ((a.outputFrame = e.sourceFrame), (a.resolution = e.resolution));
+      const s = a.inputSize,
+        o = a.inputPixel,
+        b = a.inputClamp;
       if (
-        ((n[0] = e.destinationFrame.width),
-        (n[1] = e.destinationFrame.height),
-        (n[2] = 1 / n[0]),
-        (n[3] = 1 / n[1]),
-        (t[0] = n[0] * e.resolution),
-        (t[1] = n[1] * e.resolution),
-        (t[2] = 1 / t[0]),
-        (t[3] = 1 / t[1]),
-        (o[0] = 0.5 * t[2]),
-        (o[1] = 0.5 * t[3]),
-        (o[2] = e.sourceFrame.width * n[2] - 0.5 * t[2]),
-        (o[3] = e.sourceFrame.height * n[3] - 0.5 * t[3]),
+        ((s[0] = e.destinationFrame.width),
+        (s[1] = e.destinationFrame.height),
+        (s[2] = 1 / s[0]),
+        (s[3] = 1 / s[1]),
+        (o[0] = Math.round(s[0] * e.resolution)),
+        (o[1] = Math.round(s[1] * e.resolution)),
+        (o[2] = 1 / o[0]),
+        (o[3] = 1 / o[1]),
+        (b[0] = 0.5 * o[2]),
+        (b[1] = 0.5 * o[3]),
+        (b[2] = e.sourceFrame.width * s[2] - 0.5 * o[2]),
+        (b[3] = e.sourceFrame.height * s[3] - 0.5 * o[3]),
         e.legacy)
       ) {
-        const l = s.filterArea;
+        const l = a.filterArea;
         ((l[0] = e.destinationFrame.width),
           (l[1] = e.destinationFrame.height),
           (l[2] = e.sourceFrame.x),
           (l[3] = e.sourceFrame.y),
-          (s.filterClamp = s.inputClamp));
+          (a.filterClamp = a.inputClamp));
       }
       this.globalUniforms.update();
-      const h = r[r.length - 1];
+      const _ = t[t.length - 1];
+      e.renderTexture.framebuffer.multisample > 1 &&
+        this.renderer.framebuffer.blit();
+      let d = r.length,
+        E = null;
       if (
-        (e.renderTexture.framebuffer.multisample > 1 &&
-          this.renderer.framebuffer.blit(),
-        i.length === 1)
+        (d >= 2 &&
+          r[d - 1].trivial &&
+          ((E = r[d - 2].state), (r[d - 2].state = r[d - 1].state), d--),
+        d === 1)
       )
-        (i[0].apply(
+        (r[0].apply(
           this,
           e.renderTexture,
-          h.renderTexture,
-          a.CLEAR_MODES.BLEND,
+          _.renderTexture,
+          i.CLEAR_MODES.BLEND,
           e,
         ),
           this.returnFilterTexture(e.renderTexture));
       else {
         let l = e.renderTexture,
-          d = this.getOptimalFilterTexture(l.width, l.height, e.resolution);
-        d.filterFrame = l.filterFrame;
-        let p = 0;
-        for (p = 0; p < i.length - 1; ++p) {
-          i[p].apply(this, l, d, a.CLEAR_MODES.CLEAR, e);
-          const b = l;
-          ((l = d), (d = b));
+          c = this.getOptimalFilterTexture(l.width, l.height, e.resolution);
+        c.filterFrame = l.filterFrame;
+        let h = 0;
+        for (h = 0; h < d - 1; ++h) {
+          (h === 1 &&
+            e.multisample > 1 &&
+            ((c = this.getOptimalFilterTexture(
+              l.width,
+              l.height,
+              e.resolution,
+            )),
+            (c.filterFrame = l.filterFrame)),
+            r[h].apply(this, l, c, i.CLEAR_MODES.CLEAR, e));
+          const D = l;
+          ((l = c), (c = D));
         }
-        (i[p].apply(this, l, h.renderTexture, a.CLEAR_MODES.BLEND, e),
+        (r[h].apply(this, l, _.renderTexture, i.CLEAR_MODES.BLEND, e),
+          h > 1 &&
+            e.multisample > 1 &&
+            this.returnFilterTexture(e.renderTexture),
           this.returnFilterTexture(l),
-          this.returnFilterTexture(d));
+          this.returnFilterTexture(c));
       }
-      let f = !1;
-      for (let l = 0; l < i.length; l++)
-        if (i[l]._backdropActive) {
-          const d = i[l].backdropUniformName;
-          (f || (this.returnFilterTexture(i[l].uniforms[d]), (f = !0)),
-            (i[l].uniforms[d] = null),
-            (i[l]._backdropActive = !1));
+      E && (r[d - 1].state = E);
+      let n = !1;
+      for (let l = 0; l < r.length; l++)
+        if (r[l]._backdropActive) {
+          const c = r[l].backdropUniformName;
+          (n || (this.returnFilterTexture(r[l].uniforms[c]), (n = !0)),
+            (r[l].uniforms[c] = null),
+            (r[l]._backdropActive = !1));
         }
       (e.clear(), this.statePool.push(e));
     }
-    let G = !1;
-    function re(r, e) {
-      const i = this.renderer,
-        s = i.renderTexture.current,
-        n = this.renderer.renderTexture.sourceFrame,
-        t = i.projection.transform || a.Matrix.IDENTITY;
-      let o = 1;
-      if (s) ((o = s.baseTexture.resolution), (e[1] = 1));
+    let Z = !1;
+    function fe(t, e) {
+      const r = this.renderer,
+        a = r.renderTexture.current,
+        s = this.renderer.renderTexture.sourceFrame,
+        o = r.projection.transform || I.Matrix.IDENTITY;
+      let b = 1;
+      if (a) ((b = a.baseTexture.resolution), (e[1] = 1));
       else {
-        if (!this.renderer.transparent)
+        if (this.renderer.background.alpha >= 1)
           return (
-            G ||
-              ((G = !0),
+            Z ||
+              ((Z = !0),
               console.warn(
                 "pixi-picture: you are trying to use Blend Filter on main framebuffer!",
               ),
               console.warn(
-                "pixi-picture: please set transparent=true in renderer creation params",
+                "pixi-picture: please set backgroundAlpha=0 in renderer creation params",
               )),
             null
           );
-        ((o = i.resolution), (e[1] = -1));
+        ((b = r.resolution), (e[1] = -1));
       }
-      const h = Math.round((r.x - n.x + t.tx) * o),
-        f = r.y - n.y + t.ty,
-        l = Math.round((e[1] < 0 ? n.height - (f + r.height) : f) * o),
-        d = Math.round(r.width * o),
-        p = Math.round(r.height * o),
-        b = i.gl,
-        c = this.getOptimalFilterTexture(d, p, 1);
+      const _ = Math.round((t.x - s.x + o.tx) * b),
+        d = t.y - s.y + o.ty,
+        E = Math.round((e[1] < 0 ? s.height - (d + t.height) : d) * b),
+        n = Math.round(t.width * b),
+        l = Math.round(t.height * b),
+        c = r.gl,
+        h = this.getOptimalFilterTexture(n, l, 1);
       return (
-        e[1] < 0 && (e[0] = p / c.height),
-        (c.filterFrame = n),
-        c.setResolution(o),
-        i.texture.bindForceLocation(c.baseTexture, 0),
-        b.copyTexSubImage2D(b.TEXTURE_2D, 0, 0, 0, h, l, d, p),
-        c
+        e[1] < 0 ? (e[0] = l / h.height) : (e[0] = 0),
+        (h.filterFrame = s),
+        h.setResolution(b),
+        r.texture.bindForceLocation(h.baseTexture, 0),
+        c.copyTexSubImage2D(c.TEXTURE_2D, 0, 0, 0, _, E, n, l),
+        h
       );
     }
-    function V() {
-      ((a.systems.TextureSystem.prototype.bindForceLocation = Q),
-        (a.systems.FilterSystem.prototype.push = j),
-        (a.systems.FilterSystem.prototype.pushWithCheck = Z),
-        (a.systems.FilterSystem.prototype.pop = ee),
-        (a.systems.FilterSystem.prototype.prepareBackdrop = re));
+    function ee() {
+      ((i.TextureSystem.prototype.bindForceLocation = ue),
+        (i.FilterSystem.prototype.push = he),
+        (i.FilterSystem.prototype.pushWithCheck = ce),
+        (i.FilterSystem.prototype.pop = pe),
+        (i.FilterSystem.prototype.prepareBackdrop = fe));
     }
     return (
-      V(),
-      (u.BackdropFilter = M),
-      (u.BlendFilter = E),
-      (u.FlipYFilter = A),
-      (u.HARDLIGHT_FULL = w),
-      (u.HARDLIGHT_PART = P),
-      (u.MASK_CHANNEL = S),
-      (u.MULTIPLY_FULL = U),
-      (u.MULTIPLY_PART = O),
-      (u.MaskConfig = N),
-      (u.MaskFilter = x),
-      (u.NPM_BLEND = C),
-      (u.OVERLAY_FULL = k),
-      (u.OVERLAY_PART = R),
-      (u.SOFTLIGHT_FULL = I),
-      (u.SOFTLIGHT_PART = Y),
-      (u.Sprite = $),
-      (u.TilingSprite = q),
-      (u.applyMixins = V),
-      (u.blendFullArray = F),
-      (u.getBlendFilter = H),
-      (u.getBlendFilterArray = D),
+      ee(),
+      (u.BLEND_OPACITY = g),
+      (u.BackdropFilter = w),
+      (u.BlendFilter = N),
+      (u.COLOR_BURN_PART = J),
+      (u.COLOR_DODGE_PART = q),
+      (u.DARKEN_PART = K),
+      (u.FlipYFilter = U),
+      (u.HARDLIGHT_PART = W),
+      (u.LIGHTEN_PART = $),
+      (u.MASK_CHANNEL = H),
+      (u.MULTIPLY_PART = j),
+      (u.MaskConfig = V),
+      (u.MaskFilter = G),
+      (u.OVERLAY_PART = X),
+      (u.SOFTLIGHT_PART = z),
+      (u.Sprite = se),
+      (u.TilingSprite = oe),
+      (u.applyMixins = ee),
+      (u.blendPartsArray = f),
+      (u.getBlendFilter = Q),
+      (u.getBlendFilterArray = y),
       u
     );
-  })({}, PIXI)));
+  })({}, PIXI, PIXI, PIXI, PIXI)));
 //# sourceMappingURL=pixi-picture.js.map

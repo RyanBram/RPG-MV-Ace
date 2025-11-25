@@ -6,7 +6,7 @@
  * @constructor
  */
 function Html5Audio() {
-    throw new Error('This is a static class');
+  throw new Error("This is a static class");
 }
 
 Html5Audio._initialized = false;
@@ -26,15 +26,15 @@ Html5Audio._staticSePath = null;
  * @param {String} url The url of the audio file
  */
 Html5Audio.setup = function (url) {
-    if (!this._initialized) {
-        this.initialize();
-    }
-    this.clear();
+  if (!this._initialized) {
+    this.initialize();
+  }
+  this.clear();
 
-    if(Decrypter.hasEncryptedAudio && this._audioElement.src) {
-        window.URL.revokeObjectURL(this._audioElement.src);
-    }
-    this._url = url;
+  if (Decrypter.hasEncryptedAudio && this._audioElement.src) {
+    window.URL.revokeObjectURL(this._audioElement.src);
+  }
+  this._url = url;
 };
 
 /**
@@ -45,18 +45,18 @@ Html5Audio.setup = function (url) {
  * @return {Boolean} True if the audio system is available
  */
 Html5Audio.initialize = function () {
-    if (!this._initialized) {
-        if (!this._audioElement) {
-            try {
-                this._audioElement = new Audio();
-            } catch (e) {
-                this._audioElement = null;
-            }
-        }
-        if (!!this._audioElement) this._setupEventHandlers();
-        this._initialized = true;
+  if (!this._initialized) {
+    if (!this._audioElement) {
+      try {
+        this._audioElement = new Audio();
+      } catch (e) {
+        this._audioElement = null;
+      }
     }
-    return !!this._audioElement;
+    if (!!this._audioElement) this._setupEventHandlers();
+    this._initialized = true;
+  }
+  return !!this._audioElement;
 };
 
 /**
@@ -65,11 +65,17 @@ Html5Audio.initialize = function () {
  * @private
  */
 Html5Audio._setupEventHandlers = function () {
-    document.addEventListener('touchstart', this._onTouchStart.bind(this));
-    document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
-    this._audioElement.addEventListener("loadeddata", this._onLoadedData.bind(this));
-    this._audioElement.addEventListener("error", this._onError.bind(this));
-    this._audioElement.addEventListener("ended", this._onEnded.bind(this));
+  document.addEventListener("touchstart", this._onTouchStart.bind(this));
+  document.addEventListener(
+    "visibilitychange",
+    this._onVisibilityChange.bind(this),
+  );
+  this._audioElement.addEventListener(
+    "loadeddata",
+    this._onLoadedData.bind(this),
+  );
+  this._audioElement.addEventListener("error", this._onError.bind(this));
+  this._audioElement.addEventListener("ended", this._onEnded.bind(this));
 };
 
 /**
@@ -78,20 +84,20 @@ Html5Audio._setupEventHandlers = function () {
  * @private
  */
 Html5Audio._onTouchStart = function () {
-    if (this._audioElement && !this._unlocked) {
-        if (this._isLoading) {
-            this._load(this._url);
-            this._unlocked = true;
-        } else {
-            if (this._staticSePath) {
-                this._audioElement.src = this._staticSePath;
-                this._audioElement.volume = 0;
-                this._audioElement.loop = false;
-                this._audioElement.play();
-                this._unlocked = true;
-            }
-        }
+  if (this._audioElement && !this._unlocked) {
+    if (this._isLoading) {
+      this._load(this._url);
+      this._unlocked = true;
+    } else {
+      if (this._staticSePath) {
+        this._audioElement.src = this._staticSePath;
+        this._audioElement.volume = 0;
+        this._audioElement.loop = false;
+        this._audioElement.play();
+        this._unlocked = true;
+      }
     }
+  }
 };
 
 /**
@@ -100,11 +106,11 @@ Html5Audio._onTouchStart = function () {
  * @private
  */
 Html5Audio._onVisibilityChange = function () {
-    if (document.visibilityState === 'hidden') {
-        this._onHide();
-    } else {
-        this._onShow();
-    }
+  if (document.visibilityState === "hidden") {
+    this._onHide();
+  } else {
+    this._onShow();
+  }
 };
 
 /**
@@ -113,8 +119,8 @@ Html5Audio._onVisibilityChange = function () {
  * @private
  */
 Html5Audio._onLoadedData = function () {
-    this._buffered = true;
-    if (this._unlocked) this._onLoad();
+  this._buffered = true;
+  if (this._unlocked) this._onLoad();
 };
 
 /**
@@ -123,7 +129,7 @@ Html5Audio._onLoadedData = function () {
  * @private
  */
 Html5Audio._onError = function () {
-    this._hasError = true;
+  this._hasError = true;
 };
 
 /**
@@ -132,9 +138,9 @@ Html5Audio._onError = function () {
  * @private
  */
 Html5Audio._onEnded = function () {
-    if (!this._audioElement.loop) {
-        this.stop();
-    }
+  if (!this._audioElement.loop) {
+    this.stop();
+  }
 };
 
 /**
@@ -143,8 +149,8 @@ Html5Audio._onEnded = function () {
  * @private
  */
 Html5Audio._onHide = function () {
-    this._audioElement.volume = 0;
-    this._tweenGain = 0;
+  this._audioElement.volume = 0;
+  this._tweenGain = 0;
 };
 
 /**
@@ -153,7 +159,7 @@ Html5Audio._onHide = function () {
  * @private
  */
 Html5Audio._onShow = function () {
-    this.fadeIn(0.5);
+  this.fadeIn(0.5);
 };
 
 /**
@@ -163,13 +169,13 @@ Html5Audio._onShow = function () {
  * @method clear
  */
 Html5Audio.clear = function () {
-    this.stop();
-    this._volume = 1;
-    this._loadListeners = [];
-    this._hasError = false;
-    this._autoPlay = false;
-    this._isLoading = false;
-    this._buffered = false;
+  this.stop();
+  this._volume = 1;
+  this._loadListeners = [];
+  this._hasError = false;
+  this._autoPlay = false;
+  this._isLoading = false;
+  this._buffered = false;
 };
 
 /**
@@ -179,11 +185,11 @@ Html5Audio.clear = function () {
  * @param {String} url
  */
 Html5Audio.setStaticSe = function (url) {
-    if (!this._initialized) {
-        this.initialize();
-        this.clear();
-    }
-    this._staticSePath = url;
+  if (!this._initialized) {
+    this.initialize();
+    this.clear();
+  }
+  this._staticSePath = url;
 };
 
 /**
@@ -192,11 +198,11 @@ Html5Audio.setStaticSe = function (url) {
  * @property url
  * @type String
  */
-Object.defineProperty(Html5Audio, 'url', {
-    get: function () {
-        return Html5Audio._url;
-    },
-    configurable: true
+Object.defineProperty(Html5Audio, "url", {
+  get: function () {
+    return Html5Audio._url;
+  },
+  configurable: true,
 });
 
 /**
@@ -205,17 +211,17 @@ Object.defineProperty(Html5Audio, 'url', {
  * @property volume
  * @type Number
  */
-Object.defineProperty(Html5Audio, 'volume', {
-    get: function () {
-        return Html5Audio._volume;
-    }.bind(this),
-    set: function (value) {
-        Html5Audio._volume = value;
-        if (Html5Audio._audioElement) {
-            Html5Audio._audioElement.volume = this._volume;
-        }
-    },
-    configurable: true
+Object.defineProperty(Html5Audio, "volume", {
+  get: function () {
+    return Html5Audio._volume;
+  }.bind(this),
+  set: function (value) {
+    Html5Audio._volume = value;
+    if (Html5Audio._audioElement) {
+      Html5Audio._audioElement.volume = this._volume;
+    }
+  },
+  configurable: true,
 });
 
 /**
@@ -226,7 +232,7 @@ Object.defineProperty(Html5Audio, 'volume', {
  * @return {Boolean} True if the audio data is ready to play
  */
 Html5Audio.isReady = function () {
-    return this._buffered;
+  return this._buffered;
 };
 
 /**
@@ -237,7 +243,7 @@ Html5Audio.isReady = function () {
  * @return {Boolean} True if a loading error has occurred
  */
 Html5Audio.isError = function () {
-    return this._hasError;
+  return this._hasError;
 };
 
 /**
@@ -248,7 +254,7 @@ Html5Audio.isError = function () {
  * @return {Boolean} True if the audio is playing
  */
 Html5Audio.isPlaying = function () {
-    return !this._audioElement.paused;
+  return !this._audioElement.paused;
 };
 
 /**
@@ -260,22 +266,24 @@ Html5Audio.isPlaying = function () {
  * @param {Number} offset The start position to play in seconds
  */
 Html5Audio.play = function (loop, offset) {
-    if (this.isReady()) {
-        offset = offset || 0;
-        this._startPlaying(loop, offset);
-    } else if (Html5Audio._audioElement) {
-        this._autoPlay = true;
-        this.addLoadListener(function () {
-            if (this._autoPlay) {
-                this.play(loop, offset);
-                if (this._gainTweenInterval) {
-                    clearInterval(this._gainTweenInterval);
-                    this._gainTweenInterval = null;
-                }
-            }
-        }.bind(this));
-        if (!this._isLoading) this._load(this._url);
-    }
+  if (this.isReady()) {
+    offset = offset || 0;
+    this._startPlaying(loop, offset);
+  } else if (Html5Audio._audioElement) {
+    this._autoPlay = true;
+    this.addLoadListener(
+      function () {
+        if (this._autoPlay) {
+          this.play(loop, offset);
+          if (this._gainTweenInterval) {
+            clearInterval(this._gainTweenInterval);
+            this._gainTweenInterval = null;
+          }
+        }
+      }.bind(this),
+    );
+    if (!this._isLoading) this._load(this._url);
+  }
 };
 
 /**
@@ -285,13 +293,13 @@ Html5Audio.play = function (loop, offset) {
  * @method stop
  */
 Html5Audio.stop = function () {
-    if (this._audioElement) this._audioElement.pause();
-    this._autoPlay = false;
-    if (this._tweenInterval) {
-        clearInterval(this._tweenInterval);
-        this._tweenInterval = null;
-        this._audioElement.volume = 0;
-    }
+  if (this._audioElement) this._audioElement.pause();
+  this._autoPlay = false;
+  if (this._tweenInterval) {
+    clearInterval(this._tweenInterval);
+    this._tweenInterval = null;
+    this._audioElement.volume = 0;
+  }
 };
 
 /**
@@ -302,17 +310,19 @@ Html5Audio.stop = function () {
  * @param {Number} duration Fade-in time in seconds
  */
 Html5Audio.fadeIn = function (duration) {
-    if (this.isReady()) {
-        if (this._audioElement) {
-            this._tweenTargetGain = this._volume;
-            this._tweenGain = 0;
-            this._startGainTween(duration);
-        }
-    } else if (this._autoPlay) {
-        this.addLoadListener(function () {
-            this.fadeIn(duration);
-        }.bind(this));
+  if (this.isReady()) {
+    if (this._audioElement) {
+      this._tweenTargetGain = this._volume;
+      this._tweenGain = 0;
+      this._startGainTween(duration);
     }
+  } else if (this._autoPlay) {
+    this.addLoadListener(
+      function () {
+        this.fadeIn(duration);
+      }.bind(this),
+    );
+  }
 };
 
 /**
@@ -323,11 +333,11 @@ Html5Audio.fadeIn = function (duration) {
  * @param {Number} duration Fade-out time in seconds
  */
 Html5Audio.fadeOut = function (duration) {
-    if (this._audioElement) {
-        this._tweenTargetGain = 0;
-        this._tweenGain = this._volume;
-        this._startGainTween(duration);
-    }
+  if (this._audioElement) {
+    this._tweenTargetGain = 0;
+    this._tweenGain = this._volume;
+    this._startGainTween(duration);
+  }
 };
 
 /**
@@ -337,11 +347,11 @@ Html5Audio.fadeOut = function (duration) {
  * @method seek
  */
 Html5Audio.seek = function () {
-    if (this._audioElement) {
-        return this._audioElement.currentTime;
-    } else {
-        return 0;
-    }
+  if (this._audioElement) {
+    return this._audioElement.currentTime;
+  } else {
+    return 0;
+  }
 };
 
 /**
@@ -352,7 +362,7 @@ Html5Audio.seek = function () {
  * @param {Function} listner The callback function
  */
 Html5Audio.addLoadListener = function (listner) {
-    this._loadListeners.push(listner);
+  this._loadListeners.push(listner);
 };
 
 /**
@@ -362,11 +372,11 @@ Html5Audio.addLoadListener = function (listner) {
  * @private
  */
 Html5Audio._load = function (url) {
-    if (this._audioElement) {
-        this._isLoading = true;
-        this._audioElement.src = url;
-        this._audioElement.load();
-    }
+  if (this._audioElement) {
+    this._isLoading = true;
+    this._audioElement.src = url;
+    this._audioElement.load();
+  }
 };
 
 /**
@@ -377,16 +387,16 @@ Html5Audio._load = function (url) {
  * @private
  */
 Html5Audio._startPlaying = function (loop, offset) {
-    this._audioElement.loop = loop;
-    if (this._gainTweenInterval) {
-        clearInterval(this._gainTweenInterval);
-        this._gainTweenInterval = null;
-    }
-    if (this._audioElement) {
-        this._audioElement.volume = this._volume;
-        this._audioElement.currentTime = offset;
-        this._audioElement.play();
-    }
+  this._audioElement.loop = loop;
+  if (this._gainTweenInterval) {
+    clearInterval(this._gainTweenInterval);
+    this._gainTweenInterval = null;
+  }
+  if (this._audioElement) {
+    this._audioElement.volume = this._volume;
+    this._audioElement.currentTime = offset;
+    this._audioElement.play();
+  }
 };
 
 /**
@@ -395,11 +405,11 @@ Html5Audio._startPlaying = function (loop, offset) {
  * @private
  */
 Html5Audio._onLoad = function () {
-    this._isLoading = false;
-    while (this._loadListeners.length > 0) {
-        var listener = this._loadListeners.shift();
-        listener();
-    }
+  this._isLoading = false;
+  while (this._loadListeners.length > 0) {
+    var listener = this._loadListeners.shift();
+    listener();
+  }
 };
 
 /**
@@ -409,15 +419,16 @@ Html5Audio._onLoad = function () {
  * @private
  */
 Html5Audio._startGainTween = function (duration) {
-    this._audioElement.volume = this._tweenGain;
-    if (this._gainTweenInterval) {
-        clearInterval(this._gainTweenInterval);
-        this._gainTweenInterval = null;
-    }
-    this._tweenGainStep = (this._tweenTargetGain - this._tweenGain) / (60 * duration);
-    this._gainTweenInterval = setInterval(function () {
-        Html5Audio._applyTweenValue(Html5Audio._tweenTargetGain);
-    }, 1000 / 60);
+  this._audioElement.volume = this._tweenGain;
+  if (this._gainTweenInterval) {
+    clearInterval(this._gainTweenInterval);
+    this._gainTweenInterval = null;
+  }
+  this._tweenGainStep =
+    (this._tweenTargetGain - this._tweenGain) / (60 * duration);
+  this._gainTweenInterval = setInterval(function () {
+    Html5Audio._applyTweenValue(Html5Audio._tweenTargetGain);
+  }, 1000 / 60);
 };
 
 /**
@@ -427,19 +438,18 @@ Html5Audio._startGainTween = function (duration) {
  * @private
  */
 Html5Audio._applyTweenValue = function (volume) {
-    Html5Audio._tweenGain += Html5Audio._tweenGainStep;
-    if (Html5Audio._tweenGain < 0 && Html5Audio._tweenGainStep < 0) {
-        Html5Audio._tweenGain = 0;
-    }
-    else if (Html5Audio._tweenGain > volume && Html5Audio._tweenGainStep > 0) {
-        Html5Audio._tweenGain = volume;
-    }
+  Html5Audio._tweenGain += Html5Audio._tweenGainStep;
+  if (Html5Audio._tweenGain < 0 && Html5Audio._tweenGainStep < 0) {
+    Html5Audio._tweenGain = 0;
+  } else if (Html5Audio._tweenGain > volume && Html5Audio._tweenGainStep > 0) {
+    Html5Audio._tweenGain = volume;
+  }
 
-    if (Math.abs(Html5Audio._tweenTargetGain - Html5Audio._tweenGain) < 0.01) {
-        Html5Audio._tweenGain = Html5Audio._tweenTargetGain;
-        clearInterval(Html5Audio._gainTweenInterval);
-        Html5Audio._gainTweenInterval = null;
-    }
+  if (Math.abs(Html5Audio._tweenTargetGain - Html5Audio._tweenGain) < 0.01) {
+    Html5Audio._tweenGain = Html5Audio._tweenTargetGain;
+    clearInterval(Html5Audio._gainTweenInterval);
+    Html5Audio._gainTweenInterval = null;
+  }
 
-    Html5Audio._audioElement.volume = Html5Audio._tweenGain;
+  Html5Audio._audioElement.volume = Html5Audio._tweenGain;
 };
