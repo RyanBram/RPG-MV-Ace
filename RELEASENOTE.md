@@ -56,9 +56,3 @@ This section summarises the practical changes, features, and recommended testing
 ---
 
 Notes: This release focuses on modernising the rendering and platform experience (Pixi v7) while expanding audio and i18n support. When testing, verify rendering, input, audio playback (MIDI and tracker samples), and layout on multiple devices and aspect ratios.
-
-## Committers
-
-Ryan Bram, 木星ペンギン, Ru たん,
-
-## How to test

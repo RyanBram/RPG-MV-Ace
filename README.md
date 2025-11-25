@@ -12,7 +12,7 @@ This is not just a patch. It's a comprehensive, top-to-bottom modernization effo
 
 ## The "Multi" Philosophy: Our Guiding Star
 
-The "MV" in RPG Maker MV is often said to mean "Multi-Version." We are taking this philosophy to its absolute extreme. Project Ace is built on a foundation of "Multi" principles, expanding the engine's capabilities in every conceivable direction.
+The "MV" in RPG Maker MV is often said to mean "Multi-View." We are taking this philosophy to its absolute extreme. Project Ace is built on a foundation of "Multi" principles, expanding the engine's capabilities in every conceivable direction.
 
 ---
 
@@ -20,7 +20,7 @@ The "MV" in RPG Maker MV is often said to mean "Multi-Version." We are taking th
 
 ### 🚀 Multi-Renderer: Next-Generation Graphics
 
-We are undertaking the massive effort of porting the engine core from Pixi.js v4 to the upcoming **Pixi.js v8**. This isn't just an update; it's a quantum leap.
+We are undertaking the massive effort of porting the engine core from Pixi.js v4 to the **Pixi.js v8**. This isn't just an update; it's a quantum leap.
 
 By harnessing the power of **WebGPU**, Project Ace will unlock true native-speed graphics:
 
@@ -72,27 +72,19 @@ But the crown jewel is the **RPG Player**:
 -   **Full-Featured UI:** Includes standard controls (Play, Stop, Fullscreen), a volume slider, and on-screen **Virtual Buttons** for mobile web.
 -   **Professional Polish:** Display a beautiful **Cover Art** image while the game loads, giving your players a premium experience from the very first click.
 
-### 🧩 Multi-Genre: Shatter the "RPG" Label
+### 🧩 Multi-Genre: Expand the "RPG" term (Real Playable Game)
 
 RPG Maker is no longer _just_ for RPGs. Project Ace will actively curate, adapt, and provide high-quality templates to kickstart your project in _any_ genre. Imagine building:
 
 -   Visual Novels
 -   Strategy RPGs (SRPGs)
 -   Side-scrolling Platformers
--   Intense Bullet Hell (Shmup)
+-   Intense Bullet Hell (Danmaku)
 -   Action RPGs (ARPGs)
 -   Collectible Card Games
 -   ...And so much more! The only limit is your imagination.
 
 ---
-
-## **💾 Releases & Usage**
-
-We maintain three primary release branches for different user needs:
-
--   **Stable:** The official, well-tested version recommended for production use.
--   **RC (Release Candidate):** A version nearing stability, available for final testing before merging into Stable.
--   **Develop:** The latest, most active development version, suitable for testing new features and contributions.
 
 ## **⚙️ Building the CoreScripts**
 
@@ -282,8 +274,11 @@ The requestAnimationFrame callback drives the game loop:
 
 This project is released under the [**Apache License**](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-<a href="https://www.patreon.com/c/projectmvace"><p align="center">
-<img src="https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/ProjectAce%20Support.png" /></p></a>
+<p align="center">
+  <a href="https://www.patreon.com/c/projectmvace" target="_blank" rel="noopener noreferrer">
+    <img src="https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/ProjectAce%20Support.png" alt="Support Us">
+  </a>
+</p>
 
 ## Acknowledgments & Special Thanks
 
