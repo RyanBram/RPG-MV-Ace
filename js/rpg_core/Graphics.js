@@ -1191,16 +1191,29 @@ Graphics._createModeBox = function () {
   box.style.left = "5px";
   box.style.top = "5px";
   box.style.width = "119px";
-  box.style.height = "58px";
+  box.style.height = "76px";
   box.style.background = "rgba(0,0,0,0.2)";
   box.style.zIndex = 9;
   box.style.opacity = 0;
+
+  var pixiText = document.createElement("div");
+  pixiText.id = "pixiVersionText";
+  pixiText.style.position = "absolute";
+  pixiText.style.left = "0px";
+  pixiText.style.top = "41px";
+  pixiText.style.width = "119px";
+  pixiText.style.fontSize = "12px";
+  pixiText.style.fontFamily = "monospace";
+  pixiText.style.color = "white";
+  pixiText.style.textAlign = "center";
+  pixiText.style.textShadow = "1px 1px 0 rgba(0,0,0,0.5)";
+  pixiText.innerHTML = "Pixi v" + PIXI.VERSION;
 
   var text = document.createElement("div");
   text.id = "modeText";
   text.style.position = "absolute";
   text.style.left = "0px";
-  text.style.top = "41px";
+  text.style.top = "58px";
   text.style.width = "119px";
   text.style.fontSize = "12px";
   text.style.fontFamily = "monospace";
@@ -1211,6 +1224,7 @@ Graphics._createModeBox = function () {
 
   document.body.appendChild(box);
   box.appendChild(text);
+  box.appendChild(pixiText);
 
   this._modeBox = box;
 };

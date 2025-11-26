@@ -1,0 +1,12 @@
+{
+    "name": "rmmz-game",
+    "main": "index.html",
+    "chromium-args": "--force-color-profile=srgb",
+    "window": {
+        "title": "Project Ace",
+        "width": 960,
+        "height": 720,
+        "position": "center",
+        "icon": "icon/icon.png"
+    }
+}

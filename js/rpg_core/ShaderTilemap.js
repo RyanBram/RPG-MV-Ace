@@ -118,20 +118,18 @@ ShaderTilemap.prototype._createLayers = function () {
 
   if (!this.lowerZLayer) {
     var parameters = PluginManager.parameters("ShaderTilemap");
-    var useSquareShader = Number(
-      parameters.hasOwnProperty("squareShader") ? parameters["squareShader"] : 0
-    );
+    var useSquareShader = Number(parameters.hasOwnProperty("squareShader") ? parameters["squareShader"] : 0);
 
     this.lowerLayer = new PIXI.tilemap.CompositeRectTileLayer(0, [], useSquareShader);
     this.lowerLayer.shadowColor = new Float32Array([0.0, 0.0, 0.0, 0.5]);
-    this.lowerLayer.zIndex = 0;
+    this.lowerLayer.z = 0;
     this.lowerZLayer = this.lowerLayer; // Alias untuk sisa kode
 
     this.upperLayer = new PIXI.tilemap.CompositeRectTileLayer(4, [], useSquareShader);
-    this.upperLayer.zIndex = 4;
+    this.upperLayer.z = 4;
     this.upperZLayer = this.upperLayer; // Alias untuk sisa kode
 
-    //@hackerham: create layers only in initialization. Doesn't depend on width/height
+    //@hackerham
     this.addChild(this.lowerZLayer);
     this.addChild(this.upperZLayer);
   }
