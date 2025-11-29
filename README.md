@@ -34,13 +34,14 @@ Forget fixed resolutions and black bars. Project Ace introduces true **fluid sca
 Even better, the engine supports **instantaneous layout updates** when the game window is resized, creating a flawless, professional, and responsive experience for your players.
 
 ### 📦 Multi-Platform: Build & Deploy Everywhere
+![Desktop](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/2560fd38e57e15ffde2f4799754b8376ad8f9a9f/docs/img/Desktop_Logo.svg)
 
 We're breaking free from the traditional build pipeline. Project Ace provides unparalleled flexibility by adding first-class support for modern desktop wrappers:
 
 -   **ElectronJS:** The robust, industry-standard solution for feature-rich desktop apps.
--   **Tauri:** The future of lightweight apps. By leveraging the OS's _native webview engine_, Tauri can **dramatically reduce your game's final package size** (often by over 100MB!), making distribution a breeze.
+-   **Tauri:** The future of lightweight apps. By leveraging the OS's _native webview engine_, Tauri can **dramatically reduce your game's final package size** (**Tauri is only 1 MB in size!**), making distribution a breeze.
 
-### 🎵 Multi-Format: An Audio Powerhouse
+### 🎵 Multi-Format: An Audio Powerhouse - [RPG Mixer](https://ryanbram.itch.io/rpg-mixer)
 
 Unleash your creativity with our custom **`rpg_mixer.js`** plugin. This revolutionary audio system dynamically loads backends _only when needed_, keeping your game's initial load light and fast.
 
@@ -51,7 +52,8 @@ Out of the box, we already support:
 
 The architecture is built for growth. Adding new audio formats is as simple as plugging in a new backend!
 
-### 🌍 Multi-Language: Go Global, Effortlessly
+### 🌍 Multi-Language: Go Global, Effortlessly - [RPG Locale](https://ryanbram.itch.io/rpg-locale)
+![RPG Locale](https://img.itch.zone/aW1hZ2UvNDAwODA0MC8yMzkwMjExOS5wbmc=/original/I9wSyF.png)
 
 Reach a worldwide audience with our integrated **`rpg_locale.js`** plugin. This isn't just a simple string replacer; it's a complete localization suite, supercharged by the **Translation Helper**.
 
@@ -59,7 +61,8 @@ Reach a worldwide audience with our integrated **`rpg_locale.js`** plugin. This 
 -   **Automate & Edit:** Send text to machine translation services (like Google Translate or DeepL) for a quick first pass, then edit manually for quality.
 -   **Built-in Tools:** Includes a local translator tool to assist your team's workflow. Localization has never been this streamlined.
 
-### 🕹️ Multi-Input: Total Player Control
+### 🕹️ Multi-Input: Total Player Control - [RPG player](https://ryanbram.itch.io/rpg-player)
+![RPG Player](https://img.itch.zone/aW1hZ2UvNDAwODA5OC8yMzkwMjMwMC5wbmc=/250x600/qKRy19.png) ![RPG Player](https://img.itch.zone/aW1hZ2UvNDAwODA5OC8yMzkwMjMwMS5wbmc=/250x600/wBb8u9.png)
 
 We've completely overhauled RMMV's input handling for a smoother, more intuitive experience on keyboard, mouse, and touch.
 
@@ -70,13 +73,14 @@ But the crown jewel is the **RPG Player**:
 -   **Professional Polish:** Display a beautiful **Cover Art** image while the game loads, giving your players a premium experience from the very first click.
 
 ### 🧩 Multi-Genre: Expand the "RPG" term (Real Playable Game)
+![Danmaku_core](https://img.itch.zone/aW1nLzI0Mjk0Mzc4LmpwZw==/315x250%23c/hKYvEe.jpg) ![SRP_core](https://img.itch.zone/aW1nLzEwOTM2NjYxLnBuZw==/315x250%23c/iIG17t.png)
 
 RPG Maker is no longer _just_ for RPGs. Project Ace will actively curate, adapt, and provide high-quality templates to kickstart your project in _any_ genre. Imagine building:
 
 -   Visual Novels
--   Strategy RPGs (SRPGs)
+-   [Strategy RPGs (SRPGs)](https://ryanbram.itch.io/srpg-engine-demo-v132q)
 -   Side-scrolling Platformers
--   Intense Bullet Hell (Danmaku)
+-   [Intense Bullet Hell (Danmaku)](https://ryanbram.itch.io/rpg-maker-mv-ace)
 -   Action RPGs (ARPGs)
 -   Collectible Card Games
 -   ...And so much more! The only limit is your imagination.
@@ -90,23 +94,23 @@ To compile the CoreScripts, you will need **Node.js** installed.
 ### **Build All Corescripts**
 
 Change to the project's working directory and run the following commands:
-
+```
 npm install  
 npm run build
-
+```
 The compiled CoreScripts will be available in the **dist** folder.
 
 ### **Individual Builds**
 
 You can also build specific parts of the CoreScript individually:
-
+```
 npm run build:core  
 npm run build:managers  
 npm run build:objects  
 npm run build:scenes  
 npm run build:sprites  
 npm run build:windows
-
+```
 ### **Development Tasks**
 
 We provide useful tasks for active development:
@@ -126,75 +130,6 @@ We welcome contributors\! If you'd like to join the effort, please keep these gu
 
 -   **Language:** All discussions, documentation, and code comments use **English** as the primary language.
 -   **Code Standard:** To maintain maximum **plugin compatibility**, all CoreScript development is done using **ECMAScript 5 (ES5)**.
--   **Financial Support:** If you believe in our vision and wish to accelerate Project Ace's development, please consider offering financial support.
-
-## **🗺️ Roadmap**
-
-Development progresses according to the following plan. We are currently focusing on **Version 2.0 (MV Ace)**.
-
-### **Version 1.0 (Completed)**
-
-**Goal:** Establish the community development baseline.
-
--   Split the monolithic core script file.
--   Initial GitHub repository setup.
--   Publication of this roadmap.
-
-### **Version 1.1 (Completed)**
-
-**Goal:** Address Critical Engine and Compatibility Bugs.
-
--   Resolve persistent memory-related problems.
--   Implement pre-emptive reading/loading of image assets.
--   Resolve known sound issues specific to Google Chrome.
--   Fix previously identified bugs.
-
-### **Version 1.2 (Completed)**
-
-**Goal:** Improve Stability and Continuity.
-
--   Implement load error retry mechanisms to prevent soft-locks.
--   Develop a standard options plugin.
--   Introduce a robust Volume Change API.
-
-### **Version 1.3 (Completed)**
-
-**Goal:** Enhance Game Development Workflow.
-
--   Implement an Auto-Save feature.
--   Develop a simple plugin conflict detection system.
--   Create plugin development guidelines and sample code.
--   Refine the bug reporting process.
-
-### **Version 1.4 (Completed)**
-
-**Goal:** Optimize Performance and Loading Speed.
-
--   Introduce high-speed loading for audio sources.
--   Add a progress bar to the load screen.
--   Implement a lightweight save file format.
-
-### **Version 1.5 (Completed)**
-
-**Goal:** Major UI and Input Improvements.
-
--   Full multi-touch input support.
--   Ensure battle system compatibility with touch input.
--   Full touch compliance for basic menus (e.g., equipment screen).
-
-### **Version 2.0 (Current Focus)**
-
-**Goal:** Ace version (2.0) — "Ace" is a preservation and modernisation release celebrating 10 years of RPG Maker MV.
-
-This release upgrades the rendering core to Pixi v7 (2025), modernizes rendering and layout, and expands platform and audio format support while keeping backward compatibility as a priority.
-
-Highlights
-
--   Pixi v7 (2025): The engine now targets Pixi v7, aligning the CoreScript with current rendering standards and performance improvements.
--   Fluid Aspect Ratio: Automatic layout adjustments that adapt game UI and render scaling according to the window aspect ratio for better cross-device presentation.
--   Multi-format audio: Restored support for standard MIDI (via the spessasynth_lib backend) and added tracker module playback (MOD, S3M, XM, IT, MPTM, MO3) using libopenmpt.
--   Multi-language (i18n): Built-in i18n support via the `rpg_locale` plugin and a local translator helper that enables quick, offline rough translations for development and testing.
--   Multi-platform web player: An HTML web player target that brings web-first features (playback controls and telemetry-friendly playback similar to video players) to give authors more control over distribution and playback.
 
 ## Future Work
 
