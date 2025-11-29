@@ -2,6 +2,8 @@
 
 ![Banner](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/docs/img/Project%20Ace.png)
 
+[Wiki](https://github.com/RyanBram/RPG-MV-Ace/wiki)
+
 Welcome to **Project Ace**!
 
 RPG Maker MV was a revolutionary engine, bringing JavaScript and HTML5 to the forefront of indie game development. However, as technology races forward, its core has begun to show its age.
