@@ -2,19 +2,19 @@
 
 ![Banner](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/refs/heads/main/docs/img/Project%20Ace.png)
 
-[Wiki](https://github.com/RyanBram/RPG-MV-Ace/wiki)
+<p align="center">
+ <a href="https://github.com/RyanBram/RPG-MV-Ace/wiki">Wiki</a> | <a href="https://ryanbram.github.io/RPGMV-Ace/">Demo</a>
+</p>
 
 Welcome to **Project Ace**!
 
 RPG Maker MV was a revolutionary engine, bringing JavaScript and HTML5 to the forefront of indie game development. However, as technology races forward, its core has begun to show its age.
 
-Project Ace is our answer.
-
-This is not just a patch. It's a comprehensive, top-to-bottom modernization effort. We are forging a new path to ensure that the RMMV codebase remains relevant, powerful, and incredibly versatile for years to come. Our mission is to preserve the spirit of RMMV while infusing it with the performance and features of a modern game engine.
+Project Ace is a comprehensive, top-to-bottom modernization effort. We are forging a new path to ensure that the RMMV codebase remains relevant, powerful, and incredibly versatile for years to come. Our mission is to preserve the spirit of RMMV while infusing it with the performance and features of a modern game engine.
 
 ## The "Multi" Philosophy: Our Guiding Star
 
-The "MV" in RPG Maker MV is often said to mean "Multi-View." We are taking this philosophy to its absolute extreme. Project Ace is built on a foundation of "Multi" principles, expanding the engine's capabilities in every conceivable direction.
+The "MV" in RPG Maker MV is often said to mean "Multi-View." Project Ace is built on a foundation of "Multi" principles, expanding the engine's capabilities in every conceivable direction.
 
 ---
 
@@ -35,7 +35,7 @@ Forget fixed resolutions and black bars. Project Ace introduces true **fluid sca
 
 Even better, the engine supports **instantaneous layout updates** when the game window is resized, creating a flawless, professional, and responsive experience for your players.
 
-### 📦 Multi-Platform: Build & Deploy Everywhere
+### 📦 Multi-Platform: Build & Deploy Everywhere - [Tauri-MV](https://github.com/RyanBram/Tauri-MV)
 ![Desktop](https://raw.githubusercontent.com/RyanBram/RPG-MV-Ace/2560fd38e57e15ffde2f4799754b8376ad8f9a9f/docs/img/Desktop_Logo.svg)
 
 We're breaking free from the traditional build pipeline. Project Ace provides unparalleled flexibility by adding first-class support for modern desktop wrappers:
@@ -77,12 +77,12 @@ But the crown jewel is the **RPG Player**:
 ### 🧩 Multi-Genre: Expand the "RPG" term (Real Playable Game)
 ![Danmaku_core](https://img.itch.zone/aW1nLzI0Mjk0Mzc4LmpwZw==/315x250%23c/hKYvEe.jpg) ![SRP_core](https://img.itch.zone/aW1nLzEwOTM2NjYxLnBuZw==/315x250%23c/iIG17t.png)
 
-RPG Maker is no longer _just_ for RPGs. Project Ace will actively curate, adapt, and provide high-quality templates to kickstart your project in _any_ genre. Imagine building:
+RPG Maker is no longer _just_ for RPGs. Project Ace will actively curate, adapt, and provide high-quality templates from many authors to kickstart your project in _any_ genre. Imagine building:
 
 -   Visual Novels
--   [Strategy RPGs (SRPGs)](https://ryanbram.itch.io/srpg-engine-demo-v132q)
+-   [Strategy RPGs (SRPGs)](https://ohisamacraft.nyanta.jp/srpg_gear_mv.html)
 -   Side-scrolling Platformers
--   [Intense Bullet Hell (Danmaku)](https://ryanbram.itch.io/rpg-maker-mv-ace)
+-   [Intense Bullet Hell (Danmaku)](https://github.com/HashakGik/BulletHell-RMMV)
 -   Action RPGs (ARPGs)
 -   Collectible Card Games
 -   ...And so much more! The only limit is your imagination.
