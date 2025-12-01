@@ -43,26 +43,31 @@ TouchInput.keyRepeatInterval = 6;
  * @static
  * @method clear
  */
-TouchInput.clear = function () {
-  this._mousePressed = false;
-  this._screenPressed = false;
-  this._pressedTime = 0;
-  this._events = {};
-  this._events.triggered = false;
-  this._events.cancelled = false;
-  this._events.moved = false;
-  this._events.released = false;
-  this._events.wheelX = 0;
-  this._events.wheelY = 0;
-  this._triggered = false;
-  this._cancelled = false;
-  this._moved = false;
-  this._released = false;
-  this._wheelX = 0;
-  this._wheelY = 0;
-  this._x = 0;
-  this._y = 0;
-  this._date = 0;
+TouchInput.clear = function() {
+    this._mousePressed = false;
+    this._screenPressed = false;
+    this._pressedTime = 0;
+    this._events = {};
+    this._events.triggered = false;
+    this._events.cancelled = false;
+    this._events.moved = false;
+    this._events.released = false;
+    this._events.wheelX = 0;
+    this._events.wheelY = 0;
+    this._triggered = false;
+    this._cancelled = false;
+    this._moved = false;
+    this._released = false;
+    this._wheelX = 0;
+    this._wheelY = 0;
+    this._x = 0;
+    this._y = 0;
+    this._date = 0;
+    this._startX = 0;
+    this._startY = 0;
+    this._leftSwipe = false;
+    this._rightSwipe = false;
+    this._ok = false;
 };
 
 /**
@@ -71,22 +76,37 @@ TouchInput.clear = function () {
  * @static
  * @method update
  */
-TouchInput.update = function () {
-  this._triggered = this._events.triggered;
-  this._cancelled = this._events.cancelled;
-  this._moved = this._events.moved;
-  this._released = this._events.released;
-  this._wheelX = this._events.wheelX;
-  this._wheelY = this._events.wheelY;
-  this._events.triggered = false;
-  this._events.cancelled = false;
-  this._events.moved = false;
-  this._events.released = false;
-  this._events.wheelX = 0;
-  this._events.wheelY = 0;
-  if (this.isPressed()) {
-    this._pressedTime++;
-  }
+TouchInput.update = function() {
+    this._triggered = this._events.triggered;
+    this._cancelled = this._events.cancelled;
+    this._moved = this._events.moved;
+    this._released = this._events.released;
+    this._wheelX = this._events.wheelX;
+    this._wheelY = this._events.wheelY;
+    this._events.triggered = false;
+    this._events.cancelled = false;
+    this._events.moved = false;
+    this._events.released = false;
+    this._events.wheelX = 0;
+    this._events.wheelY = 0;
+    if (this.isPressed()) {
+        this._pressedTime++;
+    }
+    if (this.isReleased()) {
+        if (this._pressedTime >= 6) {
+            var sx = (this._x - this._startX) / this._pressedTime;
+            this._leftSwipe = sx < -6;
+            this._rightSwipe = sx > 6;
+        } else {
+            this._leftSwipe = false;
+            this._rightSwipe = false;
+        }
+        this._ok = true;
+    } else {
+        this._leftSwipe = false;
+        this._rightSwipe = false;
+        this._ok = false;
+    }
 };
 
 /**
@@ -170,6 +190,26 @@ TouchInput.isMoved = function () {
  */
 TouchInput.isReleased = function () {
   return this._released;
+};
+
+TouchInput.isLeftSwipe = function() {
+    return this._leftSwipe;
+};
+
+TouchInput.isRightSwipe = function() {
+    return this._rightSwipe;
+};
+
+TouchInput.isOk = function() {
+    return this._ok;
+};
+
+TouchInput.isDoubleTap = function() {
+    return false;
+};
+
+TouchInput.clearInterval = function() {
+    // No-op
 };
 
 /**
@@ -333,12 +373,13 @@ TouchInput._onRightButtonDown = function (event) {
  * @param {MouseEvent} event
  * @private
  */
-TouchInput._onMouseMove = function (event) {
-  if (this._mousePressed) {
+TouchInput._onMouseMove = function(event) {
     var x = Graphics.pageToCanvasX(event.pageX);
     var y = Graphics.pageToCanvasY(event.pageY);
-    this._onMove(x, y);
-  }
+    if (Graphics.isInsideCanvas(x, y)) {
+        this._onMove(x, y);
+        this._date = Date.now();
+    }
 };
 
 /**
@@ -470,11 +511,13 @@ TouchInput._onLostFocus = function () {
  * @param {Number} y
  * @private
  */
-TouchInput._onTrigger = function (x, y) {
-  this._events.triggered = true;
-  this._x = x;
-  this._y = y;
-  this._date = Date.now();
+TouchInput._onTrigger = function(x, y) {
+    this._events.triggered = true;
+    this._x = x;
+    this._y = y;
+    this._date = Date.now();
+    this._startX = x;
+    this._startY = y;
 };
 
 /**

@@ -56,3 +56,8 @@ todo.md
 corescript/**/*
 corescript.zip
 package-lock.json
+
+# Template asset directories (audio, images, movies)
+template/audio/**/*
+template/img/**/*
+template/movies/**/*

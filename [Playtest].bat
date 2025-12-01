@@ -43,14 +43,14 @@ echo ================================================
 echo.
 echo  Web Root    : %CD%
 echo  Server URL  : http://localhost:%PORT%
-echo  Game URL    : http://localhost:%PORT%/template/index.html
+echo  Game URL    : http://localhost:%PORT%/template/index_dev.html
 echo.
 echo  Press Ctrl+C to stop the server
 echo ================================================
 echo.
 
 :: Open browser after 2 seconds (background task)
-start /b cmd /c "timeout /t 2 /nobreak >nul && start msedge -inprivate http://localhost:%PORT%/template/index.html"
+start /b cmd /c "timeout /t 2 /nobreak >nul && start msedge -inprivate http://localhost:%PORT%/template/index_dev.html"
 
 :: Start http-server
 :: -p PORT : port number

@@ -2010,7 +2010,9 @@ Game_Interpreter.prototype.command356 = function () {
 };
 
 Game_Interpreter.prototype.pluginCommand = function (command, args) {
-  // to be overridden by plugins
+  if (command === "CancelOff") {
+    $gameMessage.cancelOff = true;
+  }
 };
 
 Game_Interpreter.requestImagesByPluginCommand = function (command, args) {};

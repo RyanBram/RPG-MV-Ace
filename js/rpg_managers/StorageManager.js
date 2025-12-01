@@ -106,7 +106,8 @@ StorageManager.restoreBackup = function (savefileId) {
 };
 
 StorageManager.isLocalMode = function () {
-  return Utils.isDesktop();
+  // Tauri doesn't support Node.js require(), so it uses browser storage instead
+  return Utils.isDesktop() && !Utils.isTauri();
 };
 
 StorageManager.saveToLocalFile = function (savefileId, json) {

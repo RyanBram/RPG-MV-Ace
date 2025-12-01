@@ -31,6 +31,7 @@ Game_Message.prototype.clear = function () {
   this._scrollSpeed = 2;
   this._scrollNoFast = false;
   this._choiceCallback = null;
+  this.cancelOff = false;
 };
 
 Game_Message.prototype.choices = function () {

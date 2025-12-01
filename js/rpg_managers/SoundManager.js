@@ -35,7 +35,9 @@ SoundManager.playOk = function () {
 };
 
 SoundManager.playCancel = function () {
-  this.playSystemSound(2);
+  if (!$gameMessage.cancelOff) {
+    this.playSystemSound(2);
+  }
 };
 
 SoundManager.playBuzzer = function () {
