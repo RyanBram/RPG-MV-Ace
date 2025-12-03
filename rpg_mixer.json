@@ -1,0 +1,15 @@
+[
+  "js/plugins/rpg_mixer/_header.js",
+  "js/plugins/rpg_mixer/FormatHandlers.js",
+  "js/plugins/rpg_mixer/EffectsManager.js",
+  "js/plugins/rpg_mixer/DebugManager.js",
+  "js/plugins/rpg_mixer/BackendManager.js",
+  "js/plugins/rpg_mixer/SpessasynthPlayer.js",
+  "js/plugins/rpg_mixer/OpenmptPlayer.js",
+  "js/plugins/rpg_mixer/ExternalAudio.js",
+  "js/plugins/rpg_mixer/WebAudioShim.js",
+  "js/plugins/rpg_mixer/Html5AudioShim.js",
+  "js/plugins/rpg_mixer/AudioManagerIntegration.js",
+  "js/plugins/rpg_mixer/PreloadManager.js",
+  "js/plugins/rpg_mixer/_footer.js"
+]

@@ -11,6 +11,7 @@
     "build:scenes": "node ./concat.js rpg_scenes",
     "build:sprites": "node ./concat.js rpg_sprites",
     "build:windows": "node ./concat.js rpg_windows",
+    "build:mixer": "node ./concat.js rpg_mixer && if not exist dist\\plugins mkdir dist\\plugins && move /Y dist\\rpg_mixer.js dist\\plugins\\rpg_mixer.js",
     "watch": "node ./watch.js",
     "build": "run-p build:*",
     "copy:corescripts": "cpx './dist/*.js' ./game/js/",
