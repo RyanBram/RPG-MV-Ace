@@ -210,7 +210,7 @@ new Scene_Xxx() → create() → start() → update()* → stop() → terminate(
 
 ## 📜 ライセンス
 
-[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+[MIT License](https://github.com/RyanBram/RPG-MV-Ace/blob/main/LICENSE)
 
 <p align="center">
   <a href="https://www.patreon.com/c/projectmvace" target="_blank" rel="noopener noreferrer">
